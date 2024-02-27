@@ -49,7 +49,7 @@ class MakeEmbeddings:
         file_name = model_string+'_embeddings.pkl'
         # Pickle the dictionary
         save_path=Path(self.project_cache_path) / Path(file_name)
-        with open(file_name, 'wb') as f:
+        with open(save_path, 'wb') as f:
             pickle.dump(embeddings_dct, f)
 
     def execute(self):
