@@ -7,6 +7,7 @@ import torch
 import pickle
 import os
 from exceptions import CachePathNotSpecifiedError
+import pandas as pd
 
 class MakeEmbeddings:
     allen_cache_path, project_cache_path = get_cache_paths()
@@ -66,6 +67,50 @@ class MakeEmbeddings:
                 self.save_to_cache(embeddings_dct)
         return embeddings_dct
 
+class AllenExperimentUtility:
+    def __init__(self):
+        allen_cache_path, project_cache_path = get_cache_paths()
+        boc = BrainObservatoryCache(manifest_file=str(Path(allen_cache_path) / 'brain_observatory_manifest.json'))
+        
+    def view_all_imaged_areas(self):
+        print(self.boc.get_all_targeted_structures())
+
+    def view_all_cre_lines(self):
+        print(self.boc.get_all_cre_lines())
+
+    def experiment_container_ids_imaged_areas(self, imaged_areas):
+        experiment_containers=self.boc.get_experiment_containers(imaged_areas=imaged_areas)
+        print('These are experimental id\'s that contain query imaged areas: ',
+              self.boc.get_experiment_containers(imaged_areas=imaged_areas))
+        return [exp_c['id'] for exp_c in experiment_containers]
+    
+
+    
+class PreprocessNeuralData:
+    def __init__(self):
+        self.allen_cache_path, self.project_cache_path = get_cache_paths()
+        self.boc = BrainObservatoryCache(manifest_file=str(Path(self.allen_cache_path) / 'brain_observatory_manifest.json'))
+        self.eid_dict = self.make_container_dict()
+    
+    def make_container_dict(self):
+        '''
+        This method parses which experimental id's (values)
+        correspond to which experiment containers (keys).
+        '''
+        experiment_container = self.boc.get_experiment_containers()
+        container_ids = [dct['id'] for dct in experiment_container]
+        eids = self.boc.get_ophys_experiments(experiment_container_ids=container_ids)
+        df = pd.DataFrame(eids)
+        reduced_df = df[['id', 'experiment_container_id', 'session_type']]
+        grouped_df = reduced_df.groupby(['experiment_container_id', 'session_type'])['id'].agg(list).reset_index()
+        eid_dict = {}
+        for row in grouped_df.itertuples(index=False):
+            container_id, session_type, ids = row
+            if container_id not in eid_dict:
+                eid_dict[container_id] = {}
+            eid_dict[container_id][session_type] = ids[0]
+        return eid_dict
+
 
 if __name__=="__main__":
     #Initialize model and processor
@@ -73,4 +118,7 @@ if __name__=="__main__":
     model = ViTModel.from_pretrained('google/vit-base-patch32-384')
     #model_name_str = model.name_or_path
     #print(model_name_str)
-    MakeEmbeddings(processor, model).execute()
+    #MakeEmbeddings(processor, model).execute()
+    boc = BrainObservatoryCache(manifest_file=str(Path("/media/maria/DATA/AllenData") / 'brain_observatory_manifest.json'))
+    experiment_container = boc.get_experiment_containers()
+    print(experiment_container)
