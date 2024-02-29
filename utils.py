@@ -1,6 +1,31 @@
 
 import numpy as np
 import pandas as pd
+from sklearn.metrics import r2_score
+from sklearn.model_selection import train_test_split
+
+def process_single_trial(movie_stim_table, dff_traces, trial, embedding, random_state):
+    stimuli = movie_stim_table.loc[movie_stim_table['repeat'] == trial]
+    X_train, X_test, y_train_inds, y_test_inds = train_test_split(embedding,stimuli['start'].values, test_size=0.7, random_state=random_state)
+    y_train= dff_traces[:,y_train_inds]
+    y_test= dff_traces[:,y_test_inds]
+    return {'y_train': y_train, 'y_test': y_test, 'X_train': X_train, 'X_test': X_test}
+
+def regression(dat_dct, model):
+
+    y_train, y_test, X_train, X_test= dat_dct['y_train'], dat_dct['y_test'], dat_dct['X_train'], dat_dct['X_test']
+
+    regr=model.copy()
+    # Fit the model with scaled training features and target variable
+    regr.fit(X_train, y_train.T)
+
+    # Make predictions on scaled test features
+    predictions = regr.predict(X_test)
+
+    scores=[]
+    for i in range(0,y_test.shape[0]):
+        scores.append(r2_score(y_test.T[:,i], predictions[:,i]))
+    return scores#, regr.coef_.tolist()
 
 def make_container_dict(boc):
     '''

@@ -89,7 +89,7 @@ class AllenExperimentUtility:
         print('These are experimental container id\'s corresponding to imaged areas', ecids)
         return ecids
     
-from utils import make_container_dict, generate_random_state
+from utils import make_container_dict, generate_random_state, regression, process_single_trial
 
 class VisionEmbeddingToNeuronsRegressor:
     def __init__(self, model, regression_model):
@@ -131,10 +131,23 @@ class VisionEmbeddingToNeuronsRegressor:
             sess='three_session_C'
         else:
             sess=session
+        for s in session_stimuli:
+            movie_stim_table = dataset.get_stimulus_table(s)
+            embedding=self.embeddings[s]
+            #There are only 10 trials in each session-stimulus pair
+            for trial in range(10):
+                random_state=self.random_state_dct[session][s][trial]
+                data=process_single_trial(movie_stim_table, dff_traces, trial, embedding, random_state=random_state)
+                #Code: session-->model-->stimulus-->trial
+                var_exps,regr_vecs=regression(data)
+                session_dct[str(sess)+'_'+str(s)+'_'+str(trial)] = var_exps
+                #regression_vec_dct[str(sess)+'_'+str(m)+'_'+str(s)+'_'+str(trial)]=regr_vecs
+        return session_dct#, regression_vec_dct
     
     def execute(self, container_id):
         for session in self.stimulus_session_dict.keys():
-            self.make_regression_data(container_id, session)
+            session_dct=self.make_regression_data(container_id, session)
+            print(session_dct)
         
 
 
@@ -145,7 +158,10 @@ if __name__=="__main__":
     from transformers import ViTImageProcessor, ViTModel
     regression_model=Ridge(10)
     model = ViTModel.from_pretrained('google/vit-base-patch32-384')
-    VisionEmbeddingToNeuronsRegressor(model,regression_model)
+    exps=AllenExperimentUtility()
+    exps.view_all_imaged_areas()
+    id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
+    VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
     '''
     #Initialize model and processor
     #processor = ViTImageProcessor.from_pretrained('google/vit-base-patch32-384')
