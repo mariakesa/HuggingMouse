@@ -1,0 +1,8 @@
+# readthedocs.yml
+
+version: 0
+
+sphinx:
+  configuration: docs/source/conf.py  # Path to your Sphinx configuration file
+  python:
+    version: 3.9 # Python version to use during the build
