@@ -3,7 +3,7 @@ from exceptions import CachePathNotSpecifiedError
 
 def get_cache_paths(): 
     # Opening JSON file
-    f = open('/home/maria/HuggingMouse/config.json')
+    f = open('/home/maria/HuggingMouse/src/HuggingMouse/config.json')
     config = json.load(f)
 
     if not config['allen_cache_path']:

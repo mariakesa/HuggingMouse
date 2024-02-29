@@ -12,8 +12,10 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('../'))
+#sys.path.insert(0, os.path.abspath('.'))
+#sys.path.insert(0, os.path.abspath('../'))
+#sys.path.insert(0, os.path.abspath('HuggingMouse'))
+sys.path.insert(0, os.path.abspath('../../src/HuggingMouse'))           
 
 
 
@@ -56,4 +58,5 @@ html_theme = 'alabaster'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-extensions = ["myst_parser"]
+extensions = ['myst_parser']
+extensions=['sphinx.ext.autodoc']
