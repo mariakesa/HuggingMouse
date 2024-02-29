@@ -114,6 +114,8 @@ class VisionEmbeddingToNeuronsRegressor:
             'three_session_C': ['natural_movie_one', 'natural_movie_two'],
             'three_session_C2': ['natural_movie_one', 'natural_movie_two']
         }
+        print(self.embeddings.keys())
+        self.random_state_dct=generate_random_state(seed=7, stimulus_session_dict=self.stimulus_session_dict)
 
     def make_regression_data(self, container_id, session):
         session_eid  = self.eid_dict[container_id][session]
@@ -133,21 +135,27 @@ class VisionEmbeddingToNeuronsRegressor:
             sess=session
         for s in session_stimuli:
             movie_stim_table = dataset.get_stimulus_table(s)
-            embedding=self.embeddings[s]
+            #Hack-- TODO
+            embedding=self.embeddings[s[8:]]
             #There are only 10 trials in each session-stimulus pair
             for trial in range(10):
                 random_state=self.random_state_dct[session][s][trial]
                 data=process_single_trial(movie_stim_table, dff_traces, trial, embedding, random_state=random_state)
                 #Code: session-->model-->stimulus-->trial
-                var_exps,regr_vecs=regression(data)
+                var_exps = regression(data,self.regression_model)
                 session_dct[str(sess)+'_'+str(s)+'_'+str(trial)] = var_exps
                 #regression_vec_dct[str(sess)+'_'+str(m)+'_'+str(s)+'_'+str(trial)]=regr_vecs
         return session_dct#, regression_vec_dct
     
     def execute(self, container_id):
         for session in self.stimulus_session_dict.keys():
-            session_dct=self.make_regression_data(container_id, session)
-            print(session_dct)
+            #Some three sessions are only C and others only C2-- API twist. The try-except block takes care of 
+            #these cases. 
+            try:
+                session_dct=self.make_regression_data(container_id, session)
+                print(session_dct)
+            except:
+                continue
         
 
 

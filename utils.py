@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.metrics import r2_score
+from sklearn.base import clone
 from sklearn.model_selection import train_test_split
 
 def process_single_trial(movie_stim_table, dff_traces, trial, embedding, random_state):
@@ -15,7 +16,7 @@ def regression(dat_dct, model):
 
     y_train, y_test, X_train, X_test= dat_dct['y_train'], dat_dct['y_test'], dat_dct['X_train'], dat_dct['X_test']
 
-    regr=model.copy()
+    regr=clone(model)
     # Fit the model with scaled training features and target variable
     regr.fit(X_train, y_train.T)
 
