@@ -170,27 +170,3 @@ if __name__=="__main__":
     exps.view_all_imaged_areas()
     id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
     VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
-    '''
-    #Initialize model and processor
-    #processor = ViTImageProcessor.from_pretrained('google/vit-base-patch32-384')
-    #model = ViTModel.from_pretrained('google/vit-base-patch32-384')
-    #model_name_str = model.name_or_path
-    #print(model_name_str)
-    #MakeEmbeddings(processor, model).execute()
-    #boc = BrainObservatoryCache(manifest_file=str(Path("/media/maria/DATA/AllenData") / 'brain_observatory_manifest.json'))
-    #experiment_container = boc.get_experiment_containers()
-    #print(experiment_container)
-    exps=AllenExperimentUtility()
-    exps.view_all_imaged_areas()
-    id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
-    #API:
-    from sklearn.linear_model import LinearRegression
-    from transformers import ViTImageProcessor, ViTModel
-    regression_model=LinearRegression()
-    model = ViTModel.from_pretrained('google/vit-base-patch32-384')
-    exps=AllenExperimentUtility()
-    exps.view_all_imaged_areas()
-    exp_id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
-    VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(exp_id, test_train_split_config)
-    #RegressionMachine(model, regression_model).execute(exp_id, test_train_split_dct)
-'''
