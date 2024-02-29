@@ -1,8 +1,19 @@
-# readthedocs.yml
+# Read the Docs configuration file for Sphinx projects
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
-version: 0
+# Required
+version: 0.1.0
 
+# Set the OS, Python version and other tools you might need
+build:
+  os: ubuntu-22.04
+  tools:
+    python: "3.9"
+    # You can also specify other tool versions:
+    # nodejs: "20"
+    # rust: "1.70"
+    # golang: "1.20"
+
+# Build documentation in the "docs/" directory with Sphinx
 sphinx:
-  configuration: docs/source/conf.py  # Path to your Sphinx configuration file
-  python:
-    version: 3.9 # Python version to use during the build
+  configuration: docs/source/conf.py
