@@ -1,5 +1,6 @@
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
-from patlib import Path
+from pathlib import Path
+from get_config_params import get_cache_paths
 
 class AllenExperimentUtility:
     def __init__(self):

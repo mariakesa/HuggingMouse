@@ -6,6 +6,7 @@ from pathlib import Path
 import pickle
 import os
 from make_embeddings import MakeEmbeddings
+import pandas as pd
 
 class VisionEmbeddingToNeuronsRegressor:
     def __init__(self, model, regression_model):
