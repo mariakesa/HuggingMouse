@@ -89,7 +89,7 @@ class AllenExperimentUtility:
         print('These are experimental container id\'s corresponding to imaged areas', ecids)
         return ecids
     
-import make_container_dict, generate_random_state
+from utils import make_container_dict, generate_random_state
 
 class VisionEmbeddingToNeuronsRegressor:
     def __init__(self, model, regression_model):
