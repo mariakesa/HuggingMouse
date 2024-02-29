@@ -70,7 +70,7 @@ class MakeEmbeddings:
 class AllenExperimentUtility:
     def __init__(self):
         allen_cache_path, project_cache_path = get_cache_paths()
-        boc = BrainObservatoryCache(manifest_file=str(Path(allen_cache_path) / 'brain_observatory_manifest.json'))
+        self.boc = BrainObservatoryCache(manifest_file=str(Path(allen_cache_path) / 'brain_observatory_manifest.json'))
         
     def view_all_imaged_areas(self):
         print(self.boc.get_all_targeted_structures())
@@ -78,11 +78,16 @@ class AllenExperimentUtility:
     def view_all_cre_lines(self):
         print(self.boc.get_all_cre_lines())
 
+    def imaged_area_info(self, imaged_area):
+        print(0)
+
     def experiment_container_ids_imaged_areas(self, imaged_areas):
-        experiment_containers=self.boc.get_experiment_containers(imaged_areas=imaged_areas)
-        print('These are experimental id\'s that contain query imaged areas: ',
-              self.boc.get_experiment_containers(imaged_areas=imaged_areas))
-        return [exp_c['id'] for exp_c in experiment_containers]
+        experiment_containers=self.boc.get_experiment_containers(targeted_structures=imaged_areas)
+        ecids=[exp_c['id'] for exp_c in experiment_containers]
+        print('These are experimental containers\'s that contain query imaged areas: ',
+              experiment_containers)
+        print('These are experimental container id\'s corresponding to imaged areas', ecids)
+        return ecids
     
 
     
@@ -110,15 +115,30 @@ class PreprocessNeuralData:
                 eid_dict[container_id] = {}
             eid_dict[container_id][session_type] = ids[0]
         return eid_dict
+    
+class VisionEmbeddingToNeuronsRegressor:
+    def __init__(self, model, regression_model):
+
 
 
 if __name__=="__main__":
     #Initialize model and processor
-    processor = ViTImageProcessor.from_pretrained('google/vit-base-patch32-384')
-    model = ViTModel.from_pretrained('google/vit-base-patch32-384')
+    #processor = ViTImageProcessor.from_pretrained('google/vit-base-patch32-384')
+    #model = ViTModel.from_pretrained('google/vit-base-patch32-384')
     #model_name_str = model.name_or_path
     #print(model_name_str)
     #MakeEmbeddings(processor, model).execute()
-    boc = BrainObservatoryCache(manifest_file=str(Path("/media/maria/DATA/AllenData") / 'brain_observatory_manifest.json'))
-    experiment_container = boc.get_experiment_containers()
-    print(experiment_container)
+    #boc = BrainObservatoryCache(manifest_file=str(Path("/media/maria/DATA/AllenData") / 'brain_observatory_manifest.json'))
+    #experiment_container = boc.get_experiment_containers()
+    #print(experiment_container)
+    exps=AllenExperimentUtility()
+    exps.view_all_imaged_areas()
+    id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
+    #API:
+    from sklearn.linear_model import LinearRegression
+    from transformers import ViTImageProcessor, ViTModel
+    regression_model=LinearRegression()
+    model = ViTModel.from_pretrained('google/vit-base-patch32-384')
+    VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(exp_id, test_train_split_dct)
+    #RegressionMachine(model, regression_model).execute(exp_id, test_train_split_dct)
+
