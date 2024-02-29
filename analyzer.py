@@ -10,7 +10,7 @@ from exceptions import CachePathNotSpecifiedError
 import pandas as pd
 
 class MakeEmbeddings:
-    allen_cache_path, project_cache_path = get_cache_paths()
+    allen_cache_path, transformer_embedding_cache_path = get_cache_paths()
     #Experiments where these three types of movies were played
     session_A = 501704220  # This is three session A
     session_B = 501559087
@@ -49,7 +49,7 @@ class MakeEmbeddings:
         model_string=self.model.name_or_path.replace('/', '_') 
         file_name = model_string+'_embeddings.pkl'
         # Pickle the dictionary
-        save_path=Path(self.project_cache_path) / Path(file_name)
+        save_path=Path(self.transformer_embedding_cache_path) / Path(file_name)
         with open(save_path, 'wb') as f:
             pickle.dump(embeddings_dct, f)
 
@@ -60,7 +60,7 @@ class MakeEmbeddings:
             embeddings_dct[key] = self.process_stims(self.raw_data_dct[key])
         if self.cache_data:
             if not self.project_cache_path:
-                raise CachePathNotSpecifiedError("No project cache path specified in config.json!")
+                raise CachePathNotSpecifiedError("No transforme embedding cache path specified in config.json!")
             elif not os.path.exists(self.project_cache_path):
                 raise FileNotFoundError(f"Project cache path '{self.project_cache_path}' does not exist!")
             else:
@@ -69,7 +69,7 @@ class MakeEmbeddings:
 
 class AllenExperimentUtility:
     def __init__(self):
-        allen_cache_path, project_cache_path = get_cache_paths()
+        allen_cache_path, transformer_embedding_cache_path = get_cache_paths()
         self.boc = BrainObservatoryCache(manifest_file=str(Path(allen_cache_path) / 'brain_observatory_manifest.json'))
         
     def view_all_imaged_areas(self):
@@ -118,10 +118,31 @@ class PreprocessNeuralData:
     
 class VisionEmbeddingToNeuronsRegressor:
     def __init__(self, model, regression_model):
+        allen_cache_path, transformer_embedding_cache_path = get_cache_paths()
+        self.model = model
+        self.model_name_str = model.name_or_path
+        self.processor = ViTImageProcessor.from_pretrained(self.model_name_str)
+        self.model_prefix=self.model.name_or_path.replace('/', '_') 
+        self.regression_model = regression_model
+        self.regression_model_class = regression_model.__class__.__name__
+        embedding_file_path = os.path.join(transformer_embedding_cache_path, f"{self.model_prefix}_embeddings.pkl")
+        if not os.path.exists(embedding_file_path):
+            self.embeddings=MakeEmbeddings(self.processor, self.model).execute()
+        else:
+            with open(embedding_file_path, 'rb') as f:
+                self.embeddings = pickle.load(f)
+        
+
 
 
 
 if __name__=="__main__":
+    from sklearn.linear_model import LinearRegression, Ridge
+    from transformers import ViTImageProcessor, ViTModel
+    regression_model=Ridge(10)
+    model = ViTModel.from_pretrained('google/vit-base-patch32-384')
+    VisionEmbeddingToNeuronsRegressor(model,regression_model)
+    '''
     #Initialize model and processor
     #processor = ViTImageProcessor.from_pretrained('google/vit-base-patch32-384')
     #model = ViTModel.from_pretrained('google/vit-base-patch32-384')
@@ -139,6 +160,9 @@ if __name__=="__main__":
     from transformers import ViTImageProcessor, ViTModel
     regression_model=LinearRegression()
     model = ViTModel.from_pretrained('google/vit-base-patch32-384')
-    VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(exp_id, test_train_split_dct)
+    exps=AllenExperimentUtility()
+    exps.view_all_imaged_areas()
+    exp_id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
+    VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(exp_id, test_train_split_config)
     #RegressionMachine(model, regression_model).execute(exp_id, test_train_split_dct)
-
+'''

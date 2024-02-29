@@ -10,4 +10,4 @@ def get_cache_paths():
         CachePathNotSpecifiedError("No Allen data cache path specified in config.json!")
     #Different logic for two caches-- project_cache is optional, but there's no way around
     #Allen cache
-    return config['allen_cache_path'], config.get('project_cache_path', None)
+    return config['allen_cache_path'], config.get('transformer_embedding_cache_path', None)
