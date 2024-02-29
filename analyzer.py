@@ -131,6 +131,10 @@ class VisionEmbeddingToNeuronsRegressor:
             sess='three_session_C'
         else:
             sess=session
+    
+    def execute(self, container_id):
+        for session in self.stimulus_session_dict.keys():
+            self.make_regression_data(container_id, session)
         
 
 

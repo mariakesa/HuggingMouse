@@ -21,7 +21,7 @@ def make_container_dict(boc):
         eid_dict[container_id][session_type] = ids[0]
     return eid_dict
 
-def generate_random_state(seed):
+def generate_random_state(seed, stimulus_session_dict):
     np.random.seed(seed)
 
     # Function to generate a random integer
