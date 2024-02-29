@@ -89,33 +89,8 @@ class AllenExperimentUtility:
         print('These are experimental container id\'s corresponding to imaged areas', ecids)
         return ecids
     
+import make_container_dict, generate_random_state
 
-    
-class PreprocessNeuralData:
-    def __init__(self):
-        self.allen_cache_path, self.project_cache_path = get_cache_paths()
-        self.boc = BrainObservatoryCache(manifest_file=str(Path(self.allen_cache_path) / 'brain_observatory_manifest.json'))
-        self.eid_dict = self.make_container_dict()
-    
-    def make_container_dict(self):
-        '''
-        This method parses which experimental id's (values)
-        correspond to which experiment containers (keys).
-        '''
-        experiment_container = self.boc.get_experiment_containers()
-        container_ids = [dct['id'] for dct in experiment_container]
-        eids = self.boc.get_ophys_experiments(experiment_container_ids=container_ids)
-        df = pd.DataFrame(eids)
-        reduced_df = df[['id', 'experiment_container_id', 'session_type']]
-        grouped_df = reduced_df.groupby(['experiment_container_id', 'session_type'])['id'].agg(list).reset_index()
-        eid_dict = {}
-        for row in grouped_df.itertuples(index=False):
-            container_id, session_type, ids = row
-            if container_id not in eid_dict:
-                eid_dict[container_id] = {}
-            eid_dict[container_id][session_type] = ids[0]
-        return eid_dict
-    
 class VisionEmbeddingToNeuronsRegressor:
     def __init__(self, model, regression_model):
         allen_cache_path, transformer_embedding_cache_path = get_cache_paths()
@@ -131,6 +106,31 @@ class VisionEmbeddingToNeuronsRegressor:
         else:
             with open(embedding_file_path, 'rb') as f:
                 self.embeddings = pickle.load(f)
+        self.boc = BrainObservatoryCache(manifest_file=str(Path(allen_cache_path) / Path('brain_observatory_manifest.json')))
+        self.eid_dict = make_container_dict(self.boc)
+        self.stimulus_session_dict= {
+            'three_session_A': ['natural_movie_one', 'natural_movie_three'],
+            'three_session_B': ['natural_movie_one'],
+            'three_session_C': ['natural_movie_one', 'natural_movie_two'],
+            'three_session_C2': ['natural_movie_one', 'natural_movie_two']
+        }
+
+    def make_regression_data(self, container_id, session):
+        session_eid  = self.eid_dict[container_id][session]
+        dataset = self.boc.get_ophys_experiment_data(session_eid)
+        cell_ids = dataset.get_cell_specimen_ids()
+        dff_traces = dataset.get_dff_traces()[1]
+        session_stimuli = self.stimulus_session_dict[session]
+        session_dct = pd.DataFrame()
+        regression_vec_dct={}
+        session_dct['cell_ids'] = cell_ids
+        #regression_vec_dct['cell_ids'] = cell_ids
+        #Compile the sessions into the same column to avoind NAN's
+        #and make the data processing a bit easier
+        if session=='three_session_C2':
+            sess='three_session_C'
+        else:
+            sess=session
         
 
 
