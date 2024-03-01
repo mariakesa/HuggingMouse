@@ -67,26 +67,25 @@ class Visualizer:
             'three_session_C': ['natural_movie_one', 'natural_movie_two'],
             'three_session_C2': ['natural_movie_one', 'natural_movie_two']
         }
-    
-    def visualize(self,trial_averaged_data):
-        for session in self.stimulus_session_dict.keys():
-            for stimulus in self.stimulus_session_dict[session]:
-                #Some three sessions are only C and others only C2-- API twist. The try-except block takes care of 
-                #these cases. 
-                try:
-                    X_new=self.dim_reduction_model.fit_transform(trial_averaged_data[str(session)+'_'+str(stimulus)])
-                    print('Hourray! X_new: ', X_new)
 
-                    fig = plt.figure()
-                    ax = fig.add_subplot(111, projection='3d')
-                    ax.scatter(X_new[:, 0], X_new[:, 1], X_new[:, 2], c=range(X_new.shape[0]), marker='o',cmap='bwr')
-                    ax.set_xlabel('X Label')
-                    ax.set_ylabel('Y Label')
-                    ax.set_zlabel('Z Label')
-                    plt.title('3D Plot of X_new')
-                    plt.show()
-                except:
-                    continue
+    def info(self):
+        print('These are all the possible session stimulus pairs: ', self.stimulus_session_dict)
+    
+    def visualize(self,trial_averaged_data, session, stimulus):
+        try:
+            X_new=self.dim_reduction_model.fit_transform(trial_averaged_data[str(session)+'_'+str(stimulus)])
+            print('Hourray! X_new: ', X_new)
+
+            fig = plt.figure()
+            ax = fig.add_subplot(111, projection='3d')
+            ax.scatter(X_new[:, 0], X_new[:, 1], X_new[:, 2], c=range(X_new.shape[0]), marker='o',cmap='bwr')
+            ax.set_xlabel('X Label')
+            ax.set_ylabel('Y Label')
+            ax.set_zlabel('Z Label')
+            plt.title('3D Plot of X_new')
+            plt.show()
+        except:
+            print('This session stimulus combination doesn\'t exist! in this experiment container')
 
         
 
@@ -101,4 +100,6 @@ if __name__=="__main__":
     #VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
     dim_reduction_model=PCA(n_components=3)
     trial_averaged_data=MakeTrialAveragedData().get_data(id)
-    Visualizer(dim_reduction_model).visualize(trial_averaged_data)
+    visualizer=Visualizer(dim_reduction_model)
+    visualizer.info()
+    visualizer.visualize(trial_averaged_data,'three_session_A','natural_movie_one')
