@@ -6,11 +6,10 @@ import os
 
 if __name__=="__main__":
     # Check if the code is being executed in a documentation build environment
-    if os.environ.get('READTHEDOCS') != 'True':
         # Skip API call in documentation build environment
-        regression_model=Ridge(10)
-        model = ViTModel.from_pretrained('google/vit-base-patch32-384')
-        exps=AllenExperimentUtility()
-        exps.view_all_imaged_areas()
-        id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
-        VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
+    regression_model=Ridge(10)
+    model = ViTModel.from_pretrained('google/vit-base-patch32-384')
+    exps=AllenExperimentUtility()
+    exps.view_all_imaged_areas()
+    id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
+    VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
