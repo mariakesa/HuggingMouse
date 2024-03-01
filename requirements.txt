@@ -1,6 +1,7 @@
 scikit-learn>=1.2.2
 torch>=1.13.1
-allensdk>=2.15.1
+allensdk==2.15.1
 pandas>=2.0.3
 numpy>=1.24.4
 transformers>=4.31.0
+
