@@ -1,0 +1,29 @@
+:py:mod:`HuggingMouse.visualizers`
+==================================
+
+.. py:module:: HuggingMouse.visualizers
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.visualizers.Visualizer
+
+
+
+
+.. py:class:: Visualizer(dim_reduction_model)
+
+
+   .. py:method:: info()
+
+
+   .. py:method:: visualize(trial_averaged_data, session, stimulus)
+
+
+
