@@ -58,4 +58,13 @@ html_theme = 'alabaster'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-extensions = ['sphinx.ext.autodoc']
+#extensions = ['sphinx.ext.autodoc']
+#extensions = ['autoapi.extension']
+
+extensions.append('autoapi.extension')
+
+#autoapi_dirs = ['path/to/source/files', 'src']
+
+autoapi_dirs = ['../src']
+#autoapi_dirs=['src']
+#/home/maria/HuggingMouse/config.json
