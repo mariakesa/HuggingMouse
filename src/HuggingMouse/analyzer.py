@@ -10,6 +10,7 @@ from get_config_params import get_cache_paths
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from utils import make_container_dict
 import numpy as np
+from pathlib import Path
 
 
 class MakeTrialAveragedData:
@@ -25,24 +26,34 @@ class MakeTrialAveragedData:
             'three_session_C2': ['natural_movie_one', 'natural_movie_two']
         }
 
-    def make_single_session(self, container_id, session):
+    def make_single_session_data(self, container_id, session):
+        #Consider including the neuron id's so that the neurons are consistent across sessions
         session_eid  = self.eid_dict[container_id][session]
         dataset = self.boc.get_ophys_experiment_data(session_eid)
         dff_traces = dataset.get_dff_traces()[1]
-        print('My SHAPE', dff_traces.shape)
         session_stimuli = self.stimulus_session_dict[session]
         session_dct = {}
         for s in session_stimuli:
             movie_stim_table = dataset.get_stimulus_table(s)
-            stimuli = movie_stim_table.loc[movie_stim_table['repeat'] == trial]
-            data=np.mean(dff_traces)
-            #Code: session-->model-->stimulus-->trial
-            var_exps = regression(data,self.regression_model)
-            session_dct[str(sess)+'_'+str(s)+'_'+str(trial)] = var_exps
-            #regression_vec_dct[str(sess)+'_'+str(m)+'_'+str(s)+'_'+str(trial)]=regr_vecs
-        return session_dct#, regression_vec_dct
+            trial_averaged_array=[]
+            for frame in range(max(movie_stim_table['frame'])+1):
+                stimuli=movie_stim_table.loc[movie_stim_table['frame']==frame]
+                times=stimuli['start']
+                vec=np.mean(dff_traces[:,times],axis=1)
+                trial_averaged_array.append(vec)
+            trial_averaged_array=np.array(trial_averaged_array).T
+            session_dct[str(session)+'_'+str(s)]=trial_averaged_array
+        return session_dct
     
     def get_data(self,container_id):
+        for session in self.stimulus_session_dict.keys():
+            #Some three sessions are only C and others only C2-- API twist. The try-except block takes care of 
+            #these cases. 
+            try:
+                session_dct=self.make_single_session_data(container_id, session)
+                print(session_dct)
+            except:
+                continue
 
         
 
@@ -54,7 +65,7 @@ if __name__=="__main__":
     exps=AllenExperimentUtility()
     exps.view_all_imaged_areas()
     id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
-    VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
-    dim_reduction_model=PCA(n_components=3)
-    trial_averaged_data=MakeTrialAveragedData(id).get_data()
-    Visualizer(dim_reduction_model).visualize(trial_averaged_data)
+    #VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
+    #dim_reduction_model=PCA(n_components=3)
+    trial_averaged_data=MakeTrialAveragedData().get_data(id)
+    #Visualizer(dim_reduction_model).visualize(trial_averaged_data)
