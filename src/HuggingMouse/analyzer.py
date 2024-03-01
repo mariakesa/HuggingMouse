@@ -11,6 +11,8 @@ from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from utils import make_container_dict
 import numpy as np
 from pathlib import Path
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 
 class MakeTrialAveragedData:
@@ -41,7 +43,7 @@ class MakeTrialAveragedData:
                 times=stimuli['start']
                 vec=np.mean(dff_traces[:,times],axis=1)
                 trial_averaged_array.append(vec)
-            trial_averaged_array=np.array(trial_averaged_array).T
+            trial_averaged_array=np.array(trial_averaged_array)
             session_dct[str(session)+'_'+str(s)]=trial_averaged_array
         return session_dct
     
@@ -54,6 +56,37 @@ class MakeTrialAveragedData:
                 print(session_dct)
             except:
                 continue
+        return session_dct
+
+class Visualizer:
+    def __init__(self,dim_reduction_model):
+        self.dim_reduction_model=dim_reduction_model
+        self.stimulus_session_dict= {
+            'three_session_A': ['natural_movie_one', 'natural_movie_three'],
+            'three_session_B': ['natural_movie_one'],
+            'three_session_C': ['natural_movie_one', 'natural_movie_two'],
+            'three_session_C2': ['natural_movie_one', 'natural_movie_two']
+        }
+    
+    def visualize(self,trial_averaged_data):
+        for session in self.stimulus_session_dict.keys():
+            for stimulus in self.stimulus_session_dict[session]:
+                #Some three sessions are only C and others only C2-- API twist. The try-except block takes care of 
+                #these cases. 
+                try:
+                    X_new=self.dim_reduction_model.fit_transform(trial_averaged_data[str(session)+'_'+str(stimulus)])
+                    print('Hourray! X_new: ', X_new)
+
+                    fig = plt.figure()
+                    ax = fig.add_subplot(111, projection='3d')
+                    ax.scatter(X_new[:, 0], X_new[:, 1], X_new[:, 2], c=range(X_new.shape[0]), marker='o',cmap='bwr')
+                    ax.set_xlabel('X Label')
+                    ax.set_ylabel('Y Label')
+                    ax.set_zlabel('Z Label')
+                    plt.title('3D Plot of X_new')
+                    plt.show()
+                except:
+                    continue
 
         
 
@@ -66,6 +99,6 @@ if __name__=="__main__":
     exps.view_all_imaged_areas()
     id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
     #VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
-    #dim_reduction_model=PCA(n_components=3)
+    dim_reduction_model=PCA(n_components=3)
     trial_averaged_data=MakeTrialAveragedData().get_data(id)
-    #Visualizer(dim_reduction_model).visualize(trial_averaged_data)
+    Visualizer(dim_reduction_model).visualize(trial_averaged_data)
