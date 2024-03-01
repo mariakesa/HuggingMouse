@@ -1,0 +1,26 @@
+:py:mod:`get_config_params`
+===========================
+
+.. py:module:: get_config_params
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   get_config_params.create_config_file
+   get_config_params.get_cache_paths
+
+
+
+.. py:function:: create_config_file()
+
+
+.. py:function:: get_cache_paths()
+
+
