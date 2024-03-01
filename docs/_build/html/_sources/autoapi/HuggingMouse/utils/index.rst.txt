@@ -1,0 +1,37 @@
+:py:mod:`HuggingMouse.utils`
+============================
+
+.. py:module:: HuggingMouse.utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.utils.process_single_trial
+   HuggingMouse.utils.regression
+   HuggingMouse.utils.make_container_dict
+   HuggingMouse.utils.generate_random_state
+
+
+
+.. py:function:: process_single_trial(movie_stim_table, dff_traces, trial, embedding, random_state)
+
+
+.. py:function:: regression(dat_dct, model)
+
+
+.. py:function:: make_container_dict(boc)
+
+   Parses which experimental id's (values)
+   correspond to which experiment containers (keys).
+
+
+.. py:function:: generate_random_state(seed, stimulus_session_dict)
+
+

@@ -1,0 +1,13 @@
+:py:mod:`HuggingMouse.analyzer`
+===============================
+
+.. py:module:: HuggingMouse.analyzer
+
+
+Module Contents
+---------------
+
+.. py:data:: regression_model
+
+   
+

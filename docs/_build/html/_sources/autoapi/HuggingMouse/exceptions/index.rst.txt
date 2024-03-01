@@ -1,0 +1,17 @@
+:py:mod:`HuggingMouse.exceptions`
+=================================
+
+.. py:module:: HuggingMouse.exceptions
+
+
+Module Contents
+---------------
+
+.. py:exception:: CachePathNotSpecifiedError(message='Cache path is not specified in the JSON file!')
+
+
+   Bases: :py:obj:`Exception`
+
+   Exception raised when the cache path is not specified in the JSON file.
+
+

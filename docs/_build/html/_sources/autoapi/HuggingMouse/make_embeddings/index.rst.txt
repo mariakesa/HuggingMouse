@@ -1,0 +1,67 @@
+:py:mod:`HuggingMouse.make_embeddings`
+======================================
+
+.. py:module:: HuggingMouse.make_embeddings
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.make_embeddings.MakeEmbeddings
+
+
+
+
+.. py:class:: MakeEmbeddings(processor, model, cache_data=True)
+
+
+   .. py:attribute:: session_A
+      :value: 501704220
+
+      
+
+   .. py:attribute:: session_B
+      :value: 501559087
+
+      
+
+   .. py:attribute:: session_C
+      :value: 501474098
+
+      
+
+   .. py:attribute:: boc
+
+      
+
+   .. py:attribute:: raw_data_dct
+
+      
+
+   .. py:attribute:: movie_one_dataset
+
+      
+
+   .. py:attribute:: movie_two_dataset
+
+      
+
+   .. py:attribute:: movie_three_dataset
+
+      
+
+   .. py:method:: process_stims(stims)
+
+
+   .. py:method:: save_to_cache(embeddings_dct)
+
+
+   .. py:method:: execute()
+
+
+

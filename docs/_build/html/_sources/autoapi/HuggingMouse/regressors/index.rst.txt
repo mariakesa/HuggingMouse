@@ -1,0 +1,29 @@
+:py:mod:`HuggingMouse.regressors`
+=================================
+
+.. py:module:: HuggingMouse.regressors
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor
+
+
+
+
+.. py:class:: VisionEmbeddingToNeuronsRegressor(model, regression_model)
+
+
+   .. py:method:: make_regression_data(container_id, session)
+
+
+   .. py:method:: execute(container_id)
+
+
+

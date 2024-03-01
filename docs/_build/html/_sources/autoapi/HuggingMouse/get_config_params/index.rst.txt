@@ -1,0 +1,26 @@
+:py:mod:`HuggingMouse.get_config_params`
+========================================
+
+.. py:module:: HuggingMouse.get_config_params
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.get_config_params.create_config_file
+   HuggingMouse.get_config_params.get_cache_paths
+
+
+
+.. py:function:: create_config_file()
+
+
+.. py:function:: get_cache_paths()
+
+

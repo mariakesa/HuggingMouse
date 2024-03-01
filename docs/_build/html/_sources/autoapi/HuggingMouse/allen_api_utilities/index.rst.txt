@@ -1,0 +1,35 @@
+:py:mod:`HuggingMouse.allen_api_utilities`
+==========================================
+
+.. py:module:: HuggingMouse.allen_api_utilities
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.allen_api_utilities.AllenExperimentUtility
+
+
+
+
+.. py:class:: AllenExperimentUtility
+
+
+   .. py:method:: view_all_imaged_areas()
+
+
+   .. py:method:: view_all_cre_lines()
+
+
+   .. py:method:: imaged_area_info(imaged_area)
+
+
+   .. py:method:: experiment_container_ids_imaged_areas(imaged_areas)
+
+
+
