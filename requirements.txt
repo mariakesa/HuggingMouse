@@ -3,5 +3,5 @@ torch==1.13.1
 pandas==1.5.3
 numpy==1.23.5
 transformers==4.31.0
-allensdk==allensdk-2.16.2
+allensdk==2.16.2
 
