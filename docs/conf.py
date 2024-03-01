@@ -61,7 +61,13 @@ html_static_path = ['_static']
 #extensions = ['sphinx.ext.autodoc']
 #extensions = ['autoapi.extension']
 
-extensions.append('autoapi.extension')
+#extensions.append('autoapi.extension')
+
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.inheritance_diagram',
+    'autoapi.sphinx'
+]
 
 #autoapi_dirs = ['path/to/source/files', 'src']
 
