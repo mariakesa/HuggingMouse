@@ -29,19 +29,26 @@ class MakeEmbeddings:
 
 
     def process_stims(self, stims):
-        import time
-        start=time.time()
+        def get_pooler_dim(single_stim, processor, model):
+            inputs = processor(images=single_stim, return_tensors="pt")
+            with torch.no_grad():
+                outputs = model(**inputs)
+            cls = outputs.pooler_output.squeeze().detach().numpy()
+            return cls.shape[-1]
+        n_stims = len(stims)
+        #n_stims=10
         stims_dim = np.repeat(stims[:, np.newaxis, :, :], 3, axis=1)
-        inputs = self.processor(images=stims_dim, return_tensors="pt")
-        with torch.no_grad():
-            outputs = self.model(**inputs)
-        cls_outputs = outputs.pooler_output.squeeze().detach().numpy()
-        print(cls_outputs.shape)
-        # Reshape cls_outputs to match the expected output shape
-        #embeddings = cls_outputs.reshape((n_stims, -1))
-        end=time.time()
-        print('Time taken: ', end-start)
-        return cls_outputs
+        single_stim=stims_dim[0]
+        pooler_dim=get_pooler_dim(single_stim,self.processor, self.model)
+        embeddings = np.empty((n_stims, pooler_dim))
+        for i in range(n_stims):
+            print(i)
+            inputs = self.processor(images=stims_dim[i], return_tensors="pt")
+            with torch.no_grad():
+                outputs = self.model(**inputs)
+            cls = outputs.pooler_output.squeeze().detach().numpy()
+            embeddings[i, :] = cls
+        return embeddings
     
     def save_to_cache(self, embeddings_dct):
         # Replace / with _ for valid file name
@@ -56,10 +63,11 @@ class MakeEmbeddings:
         embeddings_dct = {}
         for key in self.raw_data_dct.keys():
             print(self.raw_data_dct[key].shape)
-            embeddings_dct[key] = self.process_stims(self.raw_data_dct[key])
+            if key=='natural_movie_three':
+                embeddings_dct[key] = self.process_stims(self.raw_data_dct[key])
         if self.cache_data:
             if not self.project_cache_path:
-                raise CachePathNotSpecifiedError("No transforme embedding cache path specified in config.json!")
+                raise CachePathNotSpecifiedError("No transformer embedding cache path specified in config.json!")
             elif not os.path.exists(self.project_cache_path):
                 raise FileNotFoundError(f"Project cache path '{self.project_cache_path}' does not exist!")
             else:
