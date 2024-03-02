@@ -35,6 +35,8 @@ class MakeEmbeddings:
                 outputs = model(**inputs)
             cls = outputs.pooler_output.squeeze().detach().numpy()
             return cls.shape[-1]
+        import time
+        start=time.time()
         n_stims = len(stims)
         #n_stims=10
         stims_dim = np.repeat(stims[:, np.newaxis, :, :], 3, axis=1)
@@ -48,6 +50,8 @@ class MakeEmbeddings:
                 outputs = self.model(**inputs)
             cls = outputs.pooler_output.squeeze().detach().numpy()
             embeddings[i, :] = cls
+        end=time.time()
+        print('Time taken for embedding one movie: ', end-start)
         return embeddings
     
     def save_to_cache(self, embeddings_dct):
@@ -63,8 +67,7 @@ class MakeEmbeddings:
         embeddings_dct = {}
         for key in self.raw_data_dct.keys():
             print(self.raw_data_dct[key].shape)
-            if key=='natural_movie_three':
-                embeddings_dct[key] = self.process_stims(self.raw_data_dct[key])
+            embeddings_dct[key] = self.process_stims(self.raw_data_dct[key])
         if self.cache_data:
             if not self.project_cache_path:
                 raise CachePathNotSpecifiedError("No transformer embedding cache path specified in config.json!")
