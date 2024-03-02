@@ -53,8 +53,7 @@ class VisionEmbeddingToNeuronsRegressor:
             sess=session
         for s in session_stimuli:
             movie_stim_table = dataset.get_stimulus_table(s)
-            #Hack-- TODO
-            embedding=self.embeddings[s[8:]]
+            embedding=self.embeddings[s]
             #There are only 10 trials in each session-stimulus pair
             for trial in range(10):
                 random_state=self.random_state_dct[session][s][trial]
@@ -72,5 +71,5 @@ class VisionEmbeddingToNeuronsRegressor:
             try:
                 session_dct=self.make_regression_data(container_id, session)
                 print(session_dct)
-            except:
-                continue
+            except Exception as e: 
+                print(e)

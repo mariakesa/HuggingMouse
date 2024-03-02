@@ -16,11 +16,11 @@ class MakeEmbeddings:
     boc = BrainObservatoryCache(manifest_file=str(Path(allen_cache_path) / Path('brain_observatory_manifest.json')))
     raw_data_dct = {}
     movie_one_dataset = boc.get_ophys_experiment_data(session_A)
-    raw_data_dct['movie_one'] = movie_one_dataset.get_stimulus_template('natural_movie_one')
+    raw_data_dct['natural_movie_one'] = movie_one_dataset.get_stimulus_template('natural_movie_one')
     movie_two_dataset = boc.get_ophys_experiment_data(session_C)
-    raw_data_dct['movie_two'] = movie_two_dataset.get_stimulus_template('natural_movie_two')
+    raw_data_dct['natural_movie_two'] = movie_two_dataset.get_stimulus_template('natural_movie_two')
     movie_three_dataset = boc.get_ophys_experiment_data(session_A)
-    raw_data_dct['movie_three'] = movie_three_dataset.get_stimulus_template('natural_movie_three')
+    raw_data_dct['natural_movie_three'] = movie_three_dataset.get_stimulus_template('natural_movie_three')
 
     def __init__(self, processor, model, cache_data=True):
         self.processor = processor
@@ -29,18 +29,19 @@ class MakeEmbeddings:
 
 
     def process_stims(self, stims):
-        n_stims = len(stims)
-        #n_stims=10
+        import time
+        start=time.time()
         stims_dim = np.repeat(stims[:, np.newaxis, :, :], 3, axis=1)
-        embeddings = np.empty((n_stims, 768))
-        for i in range(n_stims):
-            print(i)
-            inputs = self.processor(images=stims_dim[i], return_tensors="pt")
-            with torch.no_grad():
-                outputs = self.model(**inputs)
-            cls = outputs.pooler_output.squeeze().detach().numpy()
-            embeddings[i, :] = cls
-        return embeddings
+        inputs = self.processor(images=stims_dim, return_tensors="pt")
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+        cls_outputs = outputs.pooler_output.squeeze().detach().numpy()
+        print(cls_outputs.shape)
+        # Reshape cls_outputs to match the expected output shape
+        #embeddings = cls_outputs.reshape((n_stims, -1))
+        end=time.time()
+        print('Time taken: ', end-start)
+        return cls_outputs
     
     def save_to_cache(self, embeddings_dct):
         # Replace / with _ for valid file name
