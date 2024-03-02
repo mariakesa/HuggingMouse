@@ -4,7 +4,7 @@ from sklearn.base import clone
 
 class Visualizer:
     def __init__(self,dim_reduction_model):
-        self.dim_reduction_model=clone(dim_reduction_model)
+        self.dim_reduction_model=dim_reduction_model
         self.stimulus_session_dict= {
             'three_session_A': ['natural_movie_one', 'natural_movie_three'],
             'three_session_B': ['natural_movie_one'],
@@ -16,8 +16,9 @@ class Visualizer:
         print('These are all the possible session stimulus pairs: ', self.stimulus_session_dict)
     
     def visualize(self,trial_averaged_data, session, stimulus):
+        model=clone(self.dim_reduction_model)
         try:
-            X_new=self.dim_reduction_model.fit_transform(trial_averaged_data[str(session)][str(stimulus)])
+            X_new=model.fit_transform(trial_averaged_data[str(session)][str(stimulus)])
             #Plot
             fig = plt.figure()
             ax = fig.add_subplot(111, projection='3d')
