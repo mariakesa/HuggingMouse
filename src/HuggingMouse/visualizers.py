@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn.base import clone
 
 class Visualizer:
     def __init__(self,dim_reduction_model):
-        self.dim_reduction_model=dim_reduction_model
+        self.dim_reduction_model=clone(dim_reduction_model)
         self.stimulus_session_dict= {
             'three_session_A': ['natural_movie_one', 'natural_movie_three'],
             'three_session_B': ['natural_movie_one'],

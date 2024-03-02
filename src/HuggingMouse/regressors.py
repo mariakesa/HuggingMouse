@@ -7,6 +7,7 @@ import pickle
 import os
 from make_embeddings import MakeEmbeddings
 import pandas as pd
+from sklearn.base import clone
 
 class VisionEmbeddingToNeuronsRegressor:
     def __init__(self, model, regression_model):
@@ -15,7 +16,7 @@ class VisionEmbeddingToNeuronsRegressor:
         self.model_name_str = model.name_or_path
         self.processor = AutoImageProcessor.from_pretrained(self.model_name_str)
         self.model_prefix=self.model.name_or_path.replace('/', '_') 
-        self.regression_model = regression_model
+        self.regression_model = clone(regression_model)
         self.regression_model_class = regression_model.__class__.__name__
         embedding_file_path = os.path.join(transformer_embedding_cache_path, f"{self.model_prefix}_embeddings.pkl")
         if not os.path.exists(embedding_file_path):
