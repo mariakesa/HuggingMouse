@@ -72,7 +72,7 @@ class MakeEmbeddings:
             if not self.project_cache_path:
                 raise CachePathNotSpecifiedError("No transformer embedding cache path specified in config.json!")
             elif not os.path.exists(self.transformer_embedding_cache_path):
-                raise FileNotFoundError(f"Project cache path '{self.project_cache_path}' does not exist!")
+                raise FileNotFoundError(f"Project cache path '{self.transformer_embedding_cache_path}' does not exist!")
             else:
                 self.save_to_cache(embeddings_dct)
         return embeddings_dct
