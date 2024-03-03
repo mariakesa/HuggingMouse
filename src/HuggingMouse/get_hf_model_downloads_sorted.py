@@ -22,7 +22,7 @@ def get_downloads_last_month(model_name):
             # Remove commas from the statistic
             downloads_last_month_stat = downloads_last_month_stat.replace(",", "")
             return downloads_last_month_stat
-    return "N/A"
+    return 0
 
 start=time.time()
 # Retrieve metadata for all image recognition models

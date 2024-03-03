@@ -44,7 +44,7 @@ class MakeEmbeddings:
         pooler_dim=get_pooler_dim(single_stim,self.processor, self.model)
         embeddings = np.empty((n_stims, pooler_dim))
         for i in range(n_stims):
-            print(i)
+            #print(i)
             inputs = self.processor(images=stims_dim[i], return_tensors="pt")
             with torch.no_grad():
                 outputs = self.model(**inputs)

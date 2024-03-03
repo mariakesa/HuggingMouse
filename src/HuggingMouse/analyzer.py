@@ -17,7 +17,6 @@ if __name__=="__main__":
     exps.view_all_imaged_areas()
     id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
     VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
-    '''
     dim_reduction_model=PCA(n_components=3)
     trial_averaged_data=MakeTrialAveragedData().get_data(id)
     visualizer=Visualizer(dim_reduction_model)
@@ -26,4 +25,6 @@ if __name__=="__main__":
     dim_reduction_model2=TSNE(n_components=3)
     visualizer2=Visualizer(dim_reduction_model2)
     visualizer2.visualize(trial_averaged_data,'three_session_A','natural_movie_one')
-    '''
+
+    
+
