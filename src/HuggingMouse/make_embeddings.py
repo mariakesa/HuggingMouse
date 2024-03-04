@@ -69,7 +69,7 @@ class MakeEmbeddings:
             print(self.raw_data_dct[key].shape)
             embeddings_dct[key] = self.process_stims(self.raw_data_dct[key])
         if self.cache_data:
-            if not self.project_cache_path:
+            if not self.transformer_embedding_cache_path:
                 raise CachePathNotSpecifiedError("No transformer embedding cache path specified in config.json!")
             elif not os.path.exists(self.transformer_embedding_cache_path):
                 raise FileNotFoundError(f"Project cache path '{self.transformer_embedding_cache_path}' does not exist!")
