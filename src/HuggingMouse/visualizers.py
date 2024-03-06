@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.base import clone
 
-class Visualizer:
+class VisualizerDimReduction:
     def __init__(self,dim_reduction_model):
         self.dim_reduction_model=dim_reduction_model
         self.stimulus_session_dict= {
