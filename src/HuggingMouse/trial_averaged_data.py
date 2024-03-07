@@ -11,7 +11,6 @@ class MakeTrialAveragedData:
         allen_cache_path = os.environ.get('HGMS_ALLEN_CACHE_PATH')
         if allen_cache_path is None:
             raise AllenCachePathNotSpecifiedError()
-        transformer_embedding_cache_path=os.environ.get('HGMS_TRANSF_EMBEDDING_PATH')
         self.boc = BrainObservatoryCache(manifest_file=str(Path(allen_cache_path) / Path('brain_observatory_manifest.json')))
         self.eid_dict = make_container_dict(self.boc)
         self.stimulus_session_dict= {
