@@ -1,10 +1,17 @@
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from pathlib import Path
 from get_config_params import get_cache_paths
+import os
+from exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
 
 class AllenExperimentUtility:
     def __init__(self):
-        allen_cache_path, transformer_embedding_cache_path = get_cache_paths()
+        allen_cache_path = os.environ.get('HGMS_ALLEN_CACHE_PATH')
+        if allen_cache_path is None:
+            raise AllenCachePathNotSpecifiedError()
+        transformer_embedding_cache_path=os.environ.get('HGMS_TRANSF_EMBEDDING_PATH')
+        if transformer_embedding_cache_path is None:
+            raise TransformerEmbeddingCachePathNotSpecifiedError()
         self.boc = BrainObservatoryCache(manifest_file=str(Path(allen_cache_path) / 'brain_observatory_manifest.json'))
         
     def view_all_imaged_areas(self):
