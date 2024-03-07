@@ -1,6 +1,5 @@
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from pathlib import Path
-from get_config_params import get_cache_paths
 import os
 from exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
 

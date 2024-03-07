@@ -1,14 +1,18 @@
 from pathlib import Path
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 import numpy as np
-from get_config_params import get_cache_paths
 import torch
 import pickle
 import os
-from exceptions import CachePathNotSpecifiedError
+from exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
 
 class MakeEmbeddings:
-    allen_cache_path, transformer_embedding_cache_path = get_cache_paths()
+    allen_cache_path = os.environ.get('HGMS_ALLEN_CACHE_PATH')
+    if allen_cache_path is None:
+        raise AllenCachePathNotSpecifiedError()
+    transformer_embedding_cache_path=os.environ.get('HGMS_TRANSF_EMBEDDING_PATH')
+    if transformer_embedding_cache_path is None:
+        raise TransformerEmbeddingCachePathNotSpecifiedError()
     #Experiments where these three types of movies were played
     session_A = 501704220  # This is three session A
     session_B = 501559087
@@ -68,11 +72,5 @@ class MakeEmbeddings:
         for key in self.raw_data_dct.keys():
             print(self.raw_data_dct[key].shape)
             embeddings_dct[key] = self.process_stims(self.raw_data_dct[key])
-        if self.cache_data:
-            if not self.transformer_embedding_cache_path:
-                raise CachePathNotSpecifiedError("No transformer embedding cache path specified in config.json!")
-            elif not os.path.exists(self.transformer_embedding_cache_path):
-                raise FileNotFoundError(f"Project cache path '{self.transformer_embedding_cache_path}' does not exist!")
-            else:
-                self.save_to_cache(embeddings_dct)
+        self.save_to_cache(embeddings_dct)
         return embeddings_dct

@@ -1,17 +1,22 @@
 from transformers import AutoImageProcessor
 from utils import make_container_dict, generate_random_state, regression, process_single_trial
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
-from get_config_params import get_cache_paths
 from pathlib import Path
 import pickle
 import os
 from make_embeddings import MakeEmbeddings
 import pandas as pd
 from sklearn.base import clone
+from exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
 
 class VisionEmbeddingToNeuronsRegressor:
     def __init__(self, model, regression_model):
-        allen_cache_path, transformer_embedding_cache_path = get_cache_paths()
+        allen_cache_path = os.environ.get('HGMS_ALLEN_CACHE_PATH')
+        if allen_cache_path is None:
+            raise AllenCachePathNotSpecifiedError()
+        transformer_embedding_cache_path=os.environ.get('HGMS_TRANSF_EMBEDDING_PATH')
+        if transformer_embedding_cache_path is None:
+            raise TransformerEmbeddingCachePathNotSpecifiedError()
         self.model = model
         self.model_name_str = model.name_or_path
         self.processor = AutoImageProcessor.from_pretrained(self.model_name_str)

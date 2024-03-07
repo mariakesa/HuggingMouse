@@ -1,15 +1,17 @@
 import os
 import pandas as pd
-from get_config_params import get_cache_paths
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from utils import make_container_dict
 import numpy as np
 from pathlib import Path
+from exceptions import AllenCachePathNotSpecifiedError
 
 class MakeTrialAveragedData:
     def __init__(self):
-        print('YES!')
-        allen_cache_path, _ = get_cache_paths()
+        allen_cache_path = os.environ.get('HGMS_ALLEN_CACHE_PATH')
+        if allen_cache_path is None:
+            raise AllenCachePathNotSpecifiedError()
+        transformer_embedding_cache_path=os.environ.get('HGMS_TRANSF_EMBEDDING_PATH')
         self.boc = BrainObservatoryCache(manifest_file=str(Path(allen_cache_path) / Path('brain_observatory_manifest.json')))
         self.eid_dict = make_container_dict(self.boc)
         self.stimulus_session_dict= {
