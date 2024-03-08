@@ -1,7 +1,3 @@
-import sys
-sys.path.append('/home/maria/HuggingMouse/src')
-from dotenv import load_dotenv
-load_dotenv('.env')
 from transformers import AutoImageProcessor
 from HuggingMouse.utils import make_container_dict, generate_random_state, regression, process_single_trial, hash_df
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
@@ -125,32 +121,3 @@ class VisionEmbeddingToNeuronsRegressor:
         data_save_path=Path(self.regr_analysis_results_cache)/Path(str(hash)+'.csv')
 
         merged_data.to_csv(data_save_path)
-
-        return merged_data
-
-if __name__=='__main__':
-    from dotenv import load_dotenv
-    import os
-    top_10_keys=['google/vit-base-patch16-224', 'timm/mobilenetv3_large_100.ra_in1k']
-
-    load_dotenv('.env')
-
-    print(os.environ.get("HGMS_ALLEN_CACHE_PATH"))
-
-    import sys
-    #sys.path.append('/home/maria/HuggingMouse/src')
-    #from HuggingMouse.regressors import VisionEmbeddingToNeuronsRegressor
-    from sklearn.linear_model import Ridge
-    from sklearn.decomposition import PCA
-    from HuggingMouse.allen_api_utilities import AllenExperimentUtility
-    from dotenv import load_dotenv
-    from transformers import AutoModel
-    import os
-
-    regression_model=Ridge(10)
-    m=top_10_keys[0]
-    model = AutoModel.from_pretrained(m)
-    exps=AllenExperimentUtility()
-    exps.view_all_imaged_areas()
-    id=exps.experiment_container_ids_imaged_areas(['VISal'])[0]
-    VisionEmbeddingToNeuronsRegressor(model,regression_model).execute(id)
