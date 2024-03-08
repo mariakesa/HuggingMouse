@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.metrics import r2_score
 from sklearn.base import clone
 from sklearn.model_selection import train_test_split
+import hashlib
 
 def process_single_trial(movie_stim_table, dff_traces, trial, embedding, random_state):
     stimuli = movie_stim_table.loc[movie_stim_table['repeat'] == trial]
@@ -65,3 +66,12 @@ def generate_random_state(seed, stimulus_session_dict):
             session_dict[stimulus] = nested_dict
         random_state_dct[session] = session_dict
     return random_state_dct
+
+def hash_df(df):
+    # Convert DataFrame to a string representation
+    df_str = df.to_string(index=False).encode('utf-8')
+    
+    # Calculate the SHA-1 hash
+    sha1_hash = hashlib.sha1(df_str).hexdigest()
+    
+    return sha1_hash
