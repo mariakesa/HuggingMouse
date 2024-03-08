@@ -1,7 +1,7 @@
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from pathlib import Path
 import os
-from custom_exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
+from .custom_exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
 
 class AllenExperimentUtility:
     def __init__(self):

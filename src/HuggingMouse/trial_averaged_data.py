@@ -4,7 +4,7 @@ from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from utils import make_container_dict
 import numpy as np
 from pathlib import Path
-from exceptions import AllenCachePathNotSpecifiedError
+from .custom_exceptions import AllenCachePathNotSpecifiedError
 
 class MakeTrialAveragedData:
     def __init__(self):

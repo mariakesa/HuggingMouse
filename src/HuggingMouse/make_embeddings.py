@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import pickle
 import os
-from exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
+from .custom_exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
 
 class MakeEmbeddings:
     allen_cache_path = os.environ.get('HGMS_ALLEN_CACHE_PATH')

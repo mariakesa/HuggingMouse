@@ -1,13 +1,13 @@
 from transformers import AutoImageProcessor
-from utils import make_container_dict, generate_random_state, regression, process_single_trial
+from .utils import make_container_dict, generate_random_state, regression, process_single_trial
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from pathlib import Path
 import pickle
 import os
-from make_embeddings import MakeEmbeddings
+from .make_embeddings import MakeEmbeddings
 import pandas as pd
 from sklearn.base import clone
-from custom_exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
+from .custom_exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
 
 
 class VisionEmbeddingToNeuronsRegressor:
