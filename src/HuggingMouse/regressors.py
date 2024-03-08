@@ -7,7 +7,8 @@ import os
 from make_embeddings import MakeEmbeddings
 import pandas as pd
 from sklearn.base import clone
-from exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
+from custom_exceptions import AllenCachePathNotSpecifiedError, TransformerEmbeddingCachePathNotSpecifiedError
+
 
 class VisionEmbeddingToNeuronsRegressor:
     def __init__(self, model, regression_model):
