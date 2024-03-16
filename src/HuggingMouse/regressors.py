@@ -11,7 +11,7 @@ from HuggingMouse.custom_exceptions import AllenCachePathNotSpecifiedError, Tran
 
 
 class VisionEmbeddingToNeuronsRegressor:
-    def __init__(self, model, regression_model):
+    def __init__(self, regression_model, metrics, model=None):
         allen_cache_path = os.environ.get('HGMS_ALLEN_CACHE_PATH')
         if allen_cache_path is None:
             raise AllenCachePathNotSpecifiedError()
@@ -42,6 +42,8 @@ class VisionEmbeddingToNeuronsRegressor:
             'three_session_C2': ['natural_movie_one', 'natural_movie_two']
         }
         print(self.embeddings.keys())
+        self.metrics=metrics
+        #self.metric_function = self.metric.__function__.__name__
         self.random_state_dct=generate_random_state(seed=7, stimulus_session_dict=self.stimulus_session_dict)
 
     def make_regression_data(self, container_id, session):
@@ -68,8 +70,9 @@ class VisionEmbeddingToNeuronsRegressor:
                 random_state=self.random_state_dct[session][s][trial]
                 data=process_single_trial(movie_stim_table, dff_traces, trial, embedding, random_state=random_state)
                 #Code: session-->model-->stimulus-->trial
-                var_exps = regression(data,self.regression_model)
-                session_dct[str(sess)+'_'+str(s)+'_'+str(trial)] = var_exps
+                scores = regression(data,self.regression_model, self.metrics)
+                for k in scores:
+                    session_dct[str(sess)+'_'+str(s)+'_'+str(trial)+'_'+k] = scores[k]
                 #regression_vec_dct[str(sess)+'_'+str(m)+'_'+str(s)+'_'+str(trial)]=regr_vecs
         return session_dct#, regression_vec_dct
     
@@ -108,10 +111,8 @@ class VisionEmbeddingToNeuronsRegressor:
                 else:
                     # Perform an outer join on 'cell_id' column
                     merged_data = pd.merge(merged_data, session_df, on='cell_ids', how='outer')
-
             except: 
                 continue
-
         
         hash=hash_df(merged_data)
 
