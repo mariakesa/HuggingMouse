@@ -1,0 +1,33 @@
+:py:mod:`HuggingMouse.custom_exceptions`
+========================================
+
+.. py:module:: HuggingMouse.custom_exceptions
+
+
+Module Contents
+---------------
+
+.. py:exception:: AllenCachePathNotSpecifiedError(message=' Allen cache path is not specified as an environment variable! Set HGMS_ALLEN_CACHE_PATH with EXPORT or .env file')
+
+
+   Bases: :py:obj:`Exception`
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:exception:: TransformerEmbeddingCachePathNotSpecifiedError(message='Transformer embedding path cache path is not specified as an environment variable! Set HGMS_TRANSF_EMBEDDING_PATH with EXPORT or .env file')
+
+
+   Bases: :py:obj:`Exception`
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:exception:: RegressionOutputCachePathNotSpecifiedError(message='Regression analysis output path cache path is not specified as an environment variable! Set HGMS_REGR_ANAL_PATH with EXPORT or .env file')
+
+
+   Bases: :py:obj:`Exception`
+
+   Common base class for all non-exit exceptions.
+
+

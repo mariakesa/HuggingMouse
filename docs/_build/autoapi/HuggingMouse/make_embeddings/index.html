@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>HuggingMouse.make_embeddings &#8212; HuggingMouse 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="HuggingMouse.regressors" href="../regressors/index.html" />
+    <link rel="prev" title="HuggingMouse.custom_exceptions" href="../custom_exceptions/index.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-HuggingMouse.make_embeddings">
+<span id="huggingmouse-make-embeddings"></span><h1><a class="reference internal" href="#module-HuggingMouse.make_embeddings" title="HuggingMouse.make_embeddings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse.make_embeddings</span></code></a><a class="headerlink" href="#module-HuggingMouse.make_embeddings" title="Link to this heading">¶</a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#HuggingMouse.make_embeddings.MakeEmbeddings" title="HuggingMouse.make_embeddings.MakeEmbeddings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeEmbeddings</span></code></a></p></td>
+<td><p>Experimental stimuli from Allen Brain Observatory are</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">HuggingMouse.make_embeddings.</span></span><span class="sig-name descname"><span class="pre">MakeEmbeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings" title="Link to this definition">¶</a></dt>
+<dd><p>Experimental stimuli from Allen Brain Observatory are
+transformed with a HuggingFace Transformer defined at initialization
+and the resulting embeddings are saved to the cache specified in the
+HGMS_TRANSF_EMBEDDING_PATH environment variable.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.allen_cache_path">
+<span class="sig-name descname"><span class="pre">allen_cache_path</span></span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.allen_cache_path" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.transformer_embedding_cache_path">
+<span class="sig-name descname"><span class="pre">transformer_embedding_cache_path</span></span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.transformer_embedding_cache_path" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.session_A">
+<span class="sig-name descname"><span class="pre">session_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">501704220</span></em><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.session_A" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.session_B">
+<span class="sig-name descname"><span class="pre">session_B</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">501559087</span></em><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.session_B" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.session_C">
+<span class="sig-name descname"><span class="pre">session_C</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">501474098</span></em><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.session_C" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.boc">
+<span class="sig-name descname"><span class="pre">boc</span></span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.boc" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.raw_data_dct">
+<span class="sig-name descname"><span class="pre">raw_data_dct</span></span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.raw_data_dct" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.movie_one_dataset">
+<span class="sig-name descname"><span class="pre">movie_one_dataset</span></span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.movie_one_dataset" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.movie_two_dataset">
+<span class="sig-name descname"><span class="pre">movie_two_dataset</span></span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.movie_two_dataset" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.movie_three_dataset">
+<span class="sig-name descname"><span class="pre">movie_three_dataset</span></span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.movie_three_dataset" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.process_stims">
+<span class="sig-name descname"><span class="pre">process_stims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stims</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.process_stims" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.save_to_cache">
+<span class="sig-name descname"><span class="pre">save_to_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embeddings_dct</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.save_to_cache" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HuggingMouse.make_embeddings.MakeEmbeddings.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#HuggingMouse.make_embeddings.MakeEmbeddings.execute" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">HuggingMouse</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">API Reference</a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse</span></code></a><ul>
+      <li>Previous: <a href="../custom_exceptions/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse.custom_exceptions</span></code></a></li>
+      <li>Next: <a href="../regressors/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse.regressors</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Maria Kesa.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../../_sources/autoapi/HuggingMouse/make_embeddings/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

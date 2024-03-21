@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>HuggingMouse.regressors &#8212; HuggingMouse 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="HuggingMouse.trial_averaged_data" href="../trial_averaged_data/index.html" />
+    <link rel="prev" title="HuggingMouse.make_embeddings" href="../make_embeddings/index.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-HuggingMouse.regressors">
+<span id="huggingmouse-regressors"></span><h1><a class="reference internal" href="#module-HuggingMouse.regressors" title="HuggingMouse.regressors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse.regressors</span></code></a><a class="headerlink" href="#module-HuggingMouse.regressors" title="Link to this heading">¶</a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor" title="HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VisionEmbeddingToNeuronsRegressor</span></code></a></p></td>
+<td><p>Class for carrying out regression using a regression model</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">HuggingMouse.regressors.</span></span><span class="sig-name descname"><span class="pre">VisionEmbeddingToNeuronsRegressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regression_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor" title="Link to this definition">¶</a></dt>
+<dd><p>Class for carrying out regression using a regression model
+that adheres to sklearn estimator API (you can construct your own neural
+network). The code checks if the Transformer model embeddings are
+available in the cache and does the embedding if they don’t exist.
+The end result of the code is a Pandas data frame with the results
+of sklearn metrics for the regression experiment on each available
+trial. This data frame is saved to the path provided by the HGMS_REGR_ANAL_PATH
+environment variable with a hashed file name and the metadata stored in
+data_index_df.csv.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor.make_regression_data">
+<span class="sig-name descname"><span class="pre">make_regression_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">container_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor.make_regression_data" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor.update_data_index_df">
+<span class="sig-name descname"><span class="pre">update_data_index_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">container_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor.update_data_index_df" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">container_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor.execute" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">HuggingMouse</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">API Reference</a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse</span></code></a><ul>
+      <li>Previous: <a href="../make_embeddings/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse.make_embeddings</span></code></a></li>
+      <li>Next: <a href="../trial_averaged_data/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">HuggingMouse.trial_averaged_data</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Maria Kesa.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../../_sources/autoapi/HuggingMouse/regressors/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

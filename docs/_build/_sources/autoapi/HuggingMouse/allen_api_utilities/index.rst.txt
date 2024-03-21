@@ -1,0 +1,43 @@
+:py:mod:`HuggingMouse.allen_api_utilities`
+==========================================
+
+.. py:module:: HuggingMouse.allen_api_utilities
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.allen_api_utilities.AllenExperimentUtility
+
+
+
+
+.. py:class:: AllenExperimentUtility
+
+
+   Class for printing out container id's of experiments and
+   information related to the transgenic lines and visual areas.
+   It's meant to be useful for selecting an experiment container
+   with neural activity to fit image-derived features to. 
+
+   .. py:method:: view_all_imaged_areas()
+
+
+   .. py:method:: view_all_cre_lines()
+
+
+   .. py:method:: cre_line_info()
+
+
+   .. py:method:: visual_areas_info()
+
+
+   .. py:method:: experiment_container_ids_imaged_areas(imaged_areas)
+
+
+

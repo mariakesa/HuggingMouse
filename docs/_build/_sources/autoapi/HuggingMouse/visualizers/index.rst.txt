@@ -1,0 +1,35 @@
+:py:mod:`HuggingMouse.visualizers`
+==================================
+
+.. py:module:: HuggingMouse.visualizers
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.visualizers.VisualizerDimReduction
+
+
+
+
+.. py:class:: VisualizerDimReduction(dim_reduction_model)
+
+
+   Class for visualizing trial averaged data in 3D with 
+   a dimensionality reduction model provided to the constructor.
+   The dimensionality reduction model can be any model that 
+   adheres to the sklearn decomposition or manifold API (fit_transform
+   method). 
+
+   .. py:method:: info()
+
+
+   .. py:method:: visualize(trial_averaged_data, session, stimulus)
+
+
+

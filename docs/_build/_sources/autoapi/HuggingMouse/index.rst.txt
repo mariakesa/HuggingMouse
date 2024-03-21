@@ -1,0 +1,21 @@
+:py:mod:`HuggingMouse`
+======================
+
+.. py:module:: HuggingMouse
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   allen_api_utilities/index.rst
+   custom_exceptions/index.rst
+   make_embeddings/index.rst
+   regressors/index.rst
+   trial_averaged_data/index.rst
+   utils/index.rst
+   visualizers/index.rst
+
+

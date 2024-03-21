@@ -1,0 +1,32 @@
+:py:mod:`HuggingMouse.trial_averaged_data`
+==========================================
+
+.. py:module:: HuggingMouse.trial_averaged_data
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.trial_averaged_data.MakeTrialAveragedData
+
+
+
+
+.. py:class:: MakeTrialAveragedData
+
+
+   Average trial data from an experimental container ID for visualization using the
+   VisualizerDimReduction class.
+
+   .. py:method:: make_single_session_data(container_id, session)
+
+
+   .. py:method:: get_data(container_id)
+
+
+

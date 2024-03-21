@@ -1,0 +1,43 @@
+:py:mod:`HuggingMouse.regressors`
+=================================
+
+.. py:module:: HuggingMouse.regressors
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   HuggingMouse.regressors.VisionEmbeddingToNeuronsRegressor
+
+
+
+
+.. py:class:: VisionEmbeddingToNeuronsRegressor(regression_model, metrics, model=None)
+
+
+   Class for carrying out regression using a regression model
+   that adheres to sklearn estimator API (you can construct your own neural
+   network). The code checks if the Transformer model embeddings are
+   available in the cache and does the embedding if they don't exist. 
+   The end result of the code is a Pandas data frame with the results
+   of sklearn metrics for the regression experiment on each available
+   trial. This data frame is saved to the path provided by the HGMS_REGR_ANAL_PATH 
+   environment variable with a hashed file name and the metadata stored in
+   data_index_df.csv.
+
+
+   .. py:method:: make_regression_data(container_id, session)
+
+
+   .. py:method:: update_data_index_df(container_id, hash)
+
+
+   .. py:method:: execute(container_id)
+
+
+
