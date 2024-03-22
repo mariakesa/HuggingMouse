@@ -48,6 +48,21 @@ and call the dotenv library to read in these environment variables in your scrip
 
 Note that the dotenv library has to be installed for this to work.
 
+### Imports
+
+The environment variable code should run before the imports!
+
+    from HuggingMouse.allen_api_utilities import AllenExperimentUtility
+    from HuggingMouse.visualizers import VisualizerDimReduction
+    from HuggingMouse.trial_averaged_data import MakeTrialAveragedData
+    from sklearn.decomposition import PCA
+    from sklearn.manifold import TSNE
+    from transformers import ViTImageProcessor, ViTModel
+    from HuggingMouse.regressors import VisionEmbeddingToNeuronsRegressor
+    from sklearn.linear_model import Ridge
+    from sklearn.metrics import r2_score, mean_squared_error, explained_variance_score
+
+
 ### Selecting experimental container for analysis
 
 HuggingMouse has a helper class for choosing the experimental container (one transgenic animal).
