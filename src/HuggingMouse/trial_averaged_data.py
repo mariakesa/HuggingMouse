@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
-from utils import make_container_dict
+from HuggingMouse.utils import make_container_dict
 import numpy as np
 from pathlib import Path
 from HuggingMouse.custom_exceptions import AllenCachePathNotSpecifiedError
