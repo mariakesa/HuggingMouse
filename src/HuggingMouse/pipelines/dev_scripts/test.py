@@ -4,7 +4,10 @@ import os
 sys.path.append(os.path.abspath(os.path.join(
     os.path.dirname(__file__), '..')))
 from pipelines import pipeline
+from dotenv import load_dotenv
+
+load_dotenv()
 
 pipe = pipeline("neuron-prediction", model='car',
-                regression_model='house', analysis_function='tree')
+                regression_model='house', single_trial_f='tree')
 pipe(1234).filter_data('my_filter').plot('my_func')
