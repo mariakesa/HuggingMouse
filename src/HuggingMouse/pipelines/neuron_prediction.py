@@ -9,6 +9,7 @@ class NeuronPredictionPipeline(Pipeline):
 
     def __call__(self, experiment_id) -> str:
         output = experiment_id
+        self.current_experiment_id = experiment_id
         print(output)
         return self
 

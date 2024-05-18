@@ -8,10 +8,3 @@ from pipelines import pipeline
 pipe = pipeline("neuron-prediction", model='car',
                 regression_model='house', analysis_function='tree')
 pipe(1234).filter_data('my_filter').plot('my_func')
-
-# isort: on
-
-pipe = pipeline("neuron-prediction", model='car',
-                regression_model='house', analysis_function='tree')
-
-pipe(1234).filter_data('my_filter').plot('my_func')
