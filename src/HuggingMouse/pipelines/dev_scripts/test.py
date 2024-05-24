@@ -11,3 +11,5 @@ load_dotenv()
 pipe = pipeline("neuron-prediction", model='car',
                 regression_model='house', single_trial_f='tree')
 pipe(1234).filter_data('my_filter').plot('my_func')
+
+print(pipe.eid_dict)
