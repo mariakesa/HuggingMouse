@@ -78,16 +78,15 @@ class NeuronPredictionPipeline(Pipeline):
             sess = 'three_session_C'
         else:
             sess = session
+        data_dct = {
+            'movie_stim_table': movie_stim_table,
+            'dff_traces': dff_traces,
+            'test_set_size': self.test_set_size
+        }
         for s in session_stimuli:
             movie_stim_table = dataset.get_stimulus_table(s)
-            embedding = self.embeddings[s]
+            data_dct['embedding'] = self.embeddings[s]
             # There are only 10 trials in each session-stimulus pair
-            data_dct = {
-                'movie_stim_table': movie_stim_table,
-                'dff_traces': dff_traces,
-                'embedding': embedding,
-                'test_set_size': self.test_set_size
-            }
             for trial in range(10):
                 data_dct['trial'] = trial
                 return_dict = self.single_trial_f(**data_dct)
