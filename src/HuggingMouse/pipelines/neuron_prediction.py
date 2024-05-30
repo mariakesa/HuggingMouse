@@ -56,9 +56,12 @@ class NeuronPredictionPipeline(Pipeline):
         self.current_container = container_id
         for session, _ in self.stimulus_session_dict.items():
             try:
-                session_dct = self.handle_single_session(container_id, session)
-            except:
-                print('Error')
+                session_dct = self.handle_single_session(
+                    container_id, session)
+            except Exception as e:
+                print(session)
+                print(f'Error: {e}')
+
         # self.single_trial_f(self.model, self.regression_model,
         # container_id)
         print(output)
@@ -79,17 +82,21 @@ class NeuronPredictionPipeline(Pipeline):
         else:
             sess = session
         data_dct = {
-            'movie_stim_table': movie_stim_table,
             'dff_traces': dff_traces,
-            'test_set_size': self.test_set_size
+            'test_set_size': self.test_set_size,
+            'regression_model': self.regression_model
         }
         for s in session_stimuli:
-            movie_stim_table = dataset.get_stimulus_table(s)
+            data_dct['movie_stim_table'] = dataset.get_stimulus_table(s)
             data_dct['embedding'] = self.embeddings[s]
             # There are only 10 trials in each session-stimulus pair
             for trial in range(10):
                 data_dct['trial'] = trial
                 return_dict = self.single_trial_f(**data_dct)
+                for key, value in return_dict.items():
+                    if key == 'scores':
+                        for sc in value:
+                            session_dct[f'{sess}_{s}_{trial}_{sc}'] = value[sc]
 
                 # random_state = self.random_state_dct[session][s][trial]
                 # data = process_single_trial(
@@ -100,7 +107,7 @@ class NeuronPredictionPipeline(Pipeline):
                 # session_dct[str(sess) + '_' + str(s) + '_' +
                 # str(trial) + '_' + k] = scores[k]
                 # regression_vec_dct[str(sess)+'_'+str(m)+'_'+str(s)+'_'+str(trial)]=regr_vecs
-        session_dct = {}
+        print(session_dct)
         return session_dct
 
     def plot(self, args=None):
