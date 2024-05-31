@@ -120,7 +120,8 @@ class NeuronPredictionPipeline(Pipeline):
         fig = px.imshow(merged_data_clipped,
                         labels=dict(x="Trials", y="Neurons", color="Score"),
                         x=merged_data_clipped.columns,
-                        y=merged_data_clipped.index
+                        y=merged_data_clipped.index,
+                        color_continuous_scale='bwr'
                         )
 
         # Update x-axis to place it on the top
