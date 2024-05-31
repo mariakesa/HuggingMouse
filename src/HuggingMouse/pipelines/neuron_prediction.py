@@ -111,29 +111,34 @@ class NeuronPredictionPipeline(Pipeline):
         print('plotting')
 
         # Exclude the 'cell_ids' column from the heatmap
-        data = self.merged_data.drop(columns=['cell_ids'])
-        data.clip(lower=-1, inplace=True)
+        merged_data_no_ids = self.merged_data.drop(columns=['cell_ids'])
 
-        # Create the heatmap
-        fig = px.imshow(data,
+        # Clip the values to have a minimum of -1 for the heatmap
+        merged_data_clipped = merged_data_no_ids.clip(lower=-1)
+
+        # Create the heatmap with clipped values
+        fig = px.imshow(merged_data_clipped,
                         labels=dict(x="Trials", y="Neurons", color="Score"),
-                        x=data.columns,
-                        y=data.index
+                        x=merged_data_clipped.columns,
+                        y=merged_data_clipped.index
                         )
 
         # Update x-axis to place it on the top
         fig.update_xaxes(side="top")
 
-        # Add custom hover text
-        hover_text = [[f'cell_id: {cell_id}<br>Trial: {trial}<br>Score: {score}'
-                       for trial, score, cell_id in zip(row.index, row, self.merged_data['cell_ids'])]
-                      for idx, row in self.merged_data.iterrows()]
+        # Add custom hover text with original unclipped scores
+        hover_text = [
+            [
+                f'cell_id: {self.merged_data.loc[neuron, "cell_ids"]}<br>Trial: {trial}<br>Score: {score}'
+                for trial, score in zip(merged_data_no_ids.columns, self.merged_data.loc[neuron])
+            ]
+            for neuron in merged_data_no_ids.index
+        ]
 
-        fig.data[0].update(hovertemplate='<br>'.join([
-            '%{customdata}'
-        ]))
-
-        fig.update_traces(customdata=hover_text)
+        fig.data[0].update(
+            hovertemplate='%{customdata}',
+            customdata=hover_text
+        )
 
         fig.show()
         return self
