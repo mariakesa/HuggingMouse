@@ -18,5 +18,5 @@ pipe = pipeline("neural-activity-prediction",
                 model=model,
                 regression_model=regr_model,
                 single_trial_f=MovieSingleTrialRegressionAnalysis(),
-                test_set_size=0.7)
+                test_set_size=0.5)
 pipe(511498742).dropna().plot()
