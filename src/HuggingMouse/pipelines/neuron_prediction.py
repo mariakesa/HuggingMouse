@@ -126,21 +126,10 @@ class NeuronPredictionPipeline(Pipeline):
         # Update x-axis to place it on the top
         fig.update_xaxes(side="top")
 
-<<<<<<< HEAD
         # Add custom hover text
         hover_text = [[f'cell_id: {cell_id}<br>Session, trial and metric: {trial}<br>Score: {score}'
                        for trial, score, cell_id in zip(self.merged_data.columns[1:], row[1:], [int(row['cell_ids'])] * len(self.merged_data.columns[1:]))]
                       for idx, row in self.merged_data.iterrows()]
-=======
-        # Add custom hover text with original unclipped scores
-        hover_text = [
-            [
-                f'cell_id: {self.merged_data.loc[neuron, "cell_ids"]}<br>Trial: {trial}<br>Score: {score}'
-                for trial, score in zip(merged_data_no_ids.columns, self.merged_data.loc[neuron])
-            ]
-            for neuron in merged_data_no_ids.index
-        ]
->>>>>>> refs/remotes/origin/BackdropbuildV4
 
         fig.data[0].update(
             hovertemplate='%{customdata}',
