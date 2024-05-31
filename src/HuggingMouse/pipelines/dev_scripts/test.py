@@ -14,11 +14,9 @@ load_dotenv()
 model = ViTModel.from_pretrained('google/vit-base-patch16-224')
 regr_model = LinearRegression()
 
-pipe = pipeline("neuron-prediction",
+pipe = pipeline("neural-activity-prediction",
                 model=model,
                 regression_model=regr_model,
                 single_trial_f=MovieSingleTrialRegressionAnalysis(),
                 test_set_size=0.7)
-pipe(511498742).filter_data('my_filter').plot('my_func')
-
-# print(pipe.eid_dict)
+pipe(511498742).dropna().plot()

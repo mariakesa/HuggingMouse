@@ -9,6 +9,8 @@ from HuggingMouse.utils import make_container_dict
 import pandas as pd
 from HuggingMouse.make_embeddings import MakeEmbeddings
 import pickle
+import plotly.express as px
+import numpy as np
 
 
 class NeuronPredictionPipeline(Pipeline):
@@ -52,19 +54,24 @@ class NeuronPredictionPipeline(Pipeline):
                 self.embeddings = pickle.load(f)
 
     def __call__(self, container_id) -> str:
-        output = 'boom'
         self.current_container = container_id
+        # Create an empty DataFrame to hold the merged data
+        merged_data = None
         for session, _ in self.stimulus_session_dict.items():
             try:
                 session_dct = self.handle_single_session(
                     container_id, session)
+                session_df = pd.DataFrame(session_dct)
+                if merged_data is None:
+                    merged_data = session_df
+                else:
+                    # Perform an outer join on 'cell_id' column
+                    merged_data = pd.merge(
+                        merged_data, session_df, on='cell_ids', how='outer')
             except Exception as e:
-                print(session)
                 print(f'Error: {e}')
+        self.merged_data = merged_data
 
-        # self.single_trial_f(self.model, self.regression_model,
-        # container_id)
-        print(output)
         return self
 
     def handle_single_session(self, container_id, session):
@@ -97,21 +104,42 @@ class NeuronPredictionPipeline(Pipeline):
                     if key == 'scores':
                         for sc in value:
                             session_dct[f'{sess}_{s}_{trial}_{sc}'] = value[sc]
-
-                # random_state = self.random_state_dct[session][s][trial]
-                # data = process_single_trial(
-                # movie_stim_table, dff_traces, trial, embedding, random_state=random_state)
-                # Code: session-->model-->stimulus-->trial
-                # scores = regression(data, self.regression_model, self.metrics)
-                # for k in scores:
-                # session_dct[str(sess) + '_' + str(s) + '_' +
-                # str(trial) + '_' + k] = scores[k]
-                # regression_vec_dct[str(sess)+'_'+str(m)+'_'+str(s)+'_'+str(trial)]=regr_vecs
         print(session_dct)
         return session_dct
 
     def plot(self, args=None):
         print('plotting')
+
+        # Exclude the 'cell_ids' column from the heatmap
+        data = self.merged_data.drop(columns=['cell_ids'])
+        data.clip(lower=-1, inplace=True)
+
+        # Create the heatmap
+        fig = px.imshow(data,
+                        labels=dict(x="Trials", y="Neurons", color="Score"),
+                        x=data.columns,
+                        y=data.index
+                        )
+
+        # Update x-axis to place it on the top
+        fig.update_xaxes(side="top")
+
+        # Add custom hover text
+        hover_text = [[f'cell_id: {cell_id}<br>Trial: {trial}<br>Score: {score}'
+                       for trial, score, cell_id in zip(row.index, row, self.merged_data['cell_ids'])]
+                      for idx, row in self.merged_data.iterrows()]
+
+        fig.data[0].update(hovertemplate='<br>'.join([
+            '%{customdata}'
+        ]))
+
+        fig.update_traces(customdata=hover_text)
+
+        fig.show()
+        return self
+
+    def dropna(self, args=None):
+        self.merged_data.dropna(inplace=True)
         return self
 
     def filter_data(self, args=None):
