@@ -125,8 +125,8 @@ class NeuronPredictionPipeline(Pipeline):
         fig.update_xaxes(side="top")
 
         # Add custom hover text
-        hover_text = [[f'cell_id: {cell_id}<br>Trial: {trial}<br>Score: {score}'
-                       for trial, score, cell_id in zip(row.index, row, self.merged_data['cell_ids'])]
+        hover_text = [[f'cell_id: {cell_id}<br>Session, trial and metric: {trial}<br>Score: {score}'
+                       for trial, score, cell_id in zip(self.merged_data.columns[1:], row[1:], [int(row['cell_ids'])] * len(self.merged_data.columns[1:]))]
                       for idx, row in self.merged_data.iterrows()]
 
         fig.data[0].update(hovertemplate='<br>'.join([
