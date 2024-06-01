@@ -22,6 +22,6 @@ pipe = pipeline("neural-activity-prediction",
                 test_set_size=0.25)
 # pipe(511498742).dropna().plot()
 # 511511001
-pipe(511511001).dropna().plot()
+pipe(511511001).dropna().scatter_movies()  # .heatmap()
 # 646959386
 # pipe(646959386).dropna().plot()
