@@ -7,7 +7,7 @@ import pandas as pd
 from HuggingMouse.make_embeddings import MakeEmbeddings
 import pickle
 import plotly.express as px
-import numpy as np
+from transformers import AutoImageProcessor
 
 
 class NeuronPredictionPipeline(Pipeline):
@@ -43,6 +43,8 @@ class NeuronPredictionPipeline(Pipeline):
         }
         embedding_file_path = os.path.join(
             transformer_embedding_cache_path, f"{self.model_prefix}_embeddings.pkl")
+        self.processor = AutoImageProcessor.from_pretrained(
+            self.model_name_str)
         if not os.path.exists(embedding_file_path):
             self.embeddings = MakeEmbeddings(
                 self.processor, self.model).execute()
