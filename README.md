@@ -23,6 +23,9 @@ The following sections go through the code step by step. The scripts are avaiabl
 https://github.com/mariakesa/HuggingMouse/blob/main/scripts/example_script_pipelines.py
 https://github.com/mariakesa/HuggingMouse/blob/main/scripts/example_script.py
 
+Warning: the first time you run regression with HuggingFace model, it takes a long time to embed the movie frames, but they embeddings are cached, 
+so it only takes a long time to run the script for the first time!
+
 ### Setting environment variables
 
 To run the analyses three environment variables have to be set. These environmental variables are paths that are used to cache Allen data coming from the API, save HuggingFace model embeddings of experimental stimuli (natural movies)
