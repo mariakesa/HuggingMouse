@@ -1,4 +1,4 @@
-from base import Pipeline
+from HuggingMouse.pipelines.base import Pipeline
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from pathlib import Path
 import os

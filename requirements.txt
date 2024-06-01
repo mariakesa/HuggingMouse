@@ -4,6 +4,7 @@ pandas==1.5.3
 numpy==1.23.5
 transformers==4.31.0
 allensdk==2.16.2
+plotly==5.9.0
 sphinx-autoapi
 
 

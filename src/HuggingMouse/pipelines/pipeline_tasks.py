@@ -1,5 +1,5 @@
-from neuron_prediction import NeuronPredictionPipeline
-from base import Pipeline
+from HuggingMouse.pipelines.neuron_prediction import NeuronPredictionPipeline
+from HuggingMouse.pipelines.base import Pipeline
 
 
 def pipeline(task_name: str, **kwargs) -> Pipeline:
