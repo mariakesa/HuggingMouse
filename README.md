@@ -25,10 +25,10 @@ https://github.com/mariakesa/HuggingMouse/blob/main/scripts/example_script.py
 
 ### Setting environment variables
 
-In order to run the analyses three environment variables have to be set. These environmental variables are paths that are used to cache Allen data comming from the API, save HuggingFace model embeddings of experimental stimuli (natural movies)
-and save the csv files that come from regression analyses. 
+To run the analyses three environment variables have to be set. These environmental variables are paths that are used to cache Allen data coming from the API, save HuggingFace model embeddings of experimental stimuli (natural movies)
+and save the CSV files that come from regression analyses. 
 
-These three environment variables are: HGMS_ALLEN_CACHE_PATH, HGMS_TRANSF_EMBEDDING_PATH, HGMS_REGR_ANAL_PATH
+These three environment variables are HGMS_ALLEN_CACHE_PATH, HGMS_TRANSF_EMBEDDING_PATH, HGMS_REGR_ANAL_PATH
 
 There are two ways to set these variables. First, you can use the os module in Python:
 
