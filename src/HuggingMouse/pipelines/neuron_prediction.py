@@ -2,9 +2,6 @@ from base import Pipeline
 from allensdk.core.brain_observatory_cache import BrainObservatoryCache
 from pathlib import Path
 import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(
-    os.path.dirname(__file__), '..')))
 from HuggingMouse.utils import make_container_dict
 import pandas as pd
 from HuggingMouse.make_embeddings import MakeEmbeddings
