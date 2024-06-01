@@ -107,7 +107,7 @@ class NeuronPredictionPipeline(Pipeline):
         print(session_dct)
         return session_dct
 
-    def plot(self, args=None):
+    def heatmap(self, args=None):
         print('plotting')
 
         # Exclude the 'cell_ids' column from the heatmap
@@ -121,7 +121,7 @@ class NeuronPredictionPipeline(Pipeline):
                         labels=dict(x="Trials", y="Neurons", color="Score"),
                         x=merged_data_clipped.columns,
                         y=merged_data_clipped.index,
-                        color_continuous_scale='bwr'
+                        color_continuous_scale='BuPu'
                         )
 
         # Update x-axis to place it on the top
@@ -146,4 +146,34 @@ class NeuronPredictionPipeline(Pipeline):
 
     def filter_data(self, args=None):
         print('filtering')
+        return self
+
+    def scatter_movies(self, args=None):
+        print('plotting')
+
+        neuron_ids = self.merged_data['cell_ids']
+
+        movie_one_df = self.merged_data.filter(like='natural_movie_one')
+        movie_two_df = self.merged_data.filter(like='natural_movie_two')
+        movie_three_df = self.merged_data.filter(like='natural_movie_three')
+
+        # Calculate the mean for each row
+        row_means_one = movie_one_df.mean(axis=1)
+        row_means_two = movie_two_df.mean(axis=1)
+        row_means_three = movie_three_df.mean(axis=1)
+
+        std_one = movie_one_df.std(axis=1)
+        std_two = movie_two_df.std(axis=1)
+        std_three = movie_three_df.std(axis=1)
+
+        # Create a DataFrame for the means
+        means_df = pd.DataFrame(
+            {'Mean_one': row_means_one, 'Mean_two': row_means_two, 'Mean_three': row_means_three, 'cell_id': neuron_ids, 'Var exp for movie one': std_one, 'Var exp for movie two': std_two, 'Var exp for movie three': std_three})
+
+        # Create a 3D scatter plot with Plotly
+        fig = px.scatter_3d(means_df, x='Mean_one', y='Mean_two', z='Mean_three', labels={'Mean_one': 'Mean var exp for movie one', 'Mean_two': 'Mean var exp for movie two', 'Mean_three': 'Mean var exp for movie three'},
+                            title='3D Scatter Plot of Mean Variance Explained Across Stimuli', hover_data={'Var exp for movie one': True, 'Var exp for movie two': True, 'Var exp for movie three': True, 'cell_id': True})
+
+        # Show the plot
+        fig.show()
         return self
