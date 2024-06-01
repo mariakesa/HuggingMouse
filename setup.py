@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(name='HuggingMouse',
-      version='0.1.1',
+      version='0.2.0',
       description='Data analysis library for Allen Brain Observatory data',
       author='Maria Kesa',
       author_email='mariarosekesa@gmail.com',
