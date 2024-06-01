@@ -17,7 +17,7 @@ The documentation of the project is at: https://huggingmouse.readthedocs.io/en/l
 
 [Allen Brain Observatory](https://allensdk.readthedocs.io/en/latest/brain_observatory.html) is a massive repository of calcium imaging and NeuroPixel probe recordings from the mouse visual cortex during presentation of various visual stimuli ([see also](https://github.com/AllenInstitute/brain_observatory_examples/blob/master/Visual%20Coding%202P%20Cheat%20Sheet%20October2018.pdf)). Currently, HuggingMouse supports running regression analyses on neural data while mice are viewing [three different natural movies](https://observatory.brain-map.org/visualcoding/stimulus/natural_movies). 
 
-Since version 0.1.0 HuggingMouse supports HuggingFace like pipelines. 
+Since version 0.1.0 HuggingMouse supports HuggingFace-like pipelines. 
 
 The following sections go through the code step by step. The scripts are avaiable here: 
 https://github.com/mariakesa/HuggingMouse/blob/main/scripts/example_script_pipelines.py
