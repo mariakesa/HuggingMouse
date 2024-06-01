@@ -19,7 +19,7 @@ The documentation of the project is at: https://huggingmouse.readthedocs.io/en/l
 
 Since version 0.1.0 HuggingMouse supports HuggingFace like pipelines. 
 
-The following sections go through the code step by step. The entire script is avaiable here: 
+The following sections go through the code step by step. The scripts are avaiable here: 
 https://github.com/mariakesa/HuggingMouse/blob/main/scripts/example_script_pipelines.py
 https://github.com/mariakesa/HuggingMouse/blob/main/scripts/example_script.py
 
@@ -52,46 +52,6 @@ and call the dotenv library to read in these environment variables in your scrip
 
 Note that the dotenv library has to be installed for this to work.
 
-### Selecting experimental container for analysis
-
-HuggingMouse has a helper class for choosing the experimental container (one transgenic animal).
-
-    from HuggingMouse.allen_api_utilities import AllenExperimentUtility
-
-    info_utility = AllenExperimentUtility()
-    #These functions will print some information to help select the
-    #experimental container id to work on. 
-    info_utility.view_all_imaged_areas()
-    info_utility.visual_areas_info()
-    #Let's grab the first eperiment container id in the VISal area. 
-    id = info_utility.experiment_container_ids_imaged_areas(['VISal'])[0]
-
-
-### Visualizing trial averaged data
-
-You can use any sklearn decomposition (PCA, NMF) or manifold method (TSNE, SpectralEmbedding) or
-your own custom model with a fit_transform method to visualize the patterns in the neural data. 
-This is currently possible with trial averaged data. The visualize function takes the session and 
-the stimulus that uniquely identify a sequence of trials and embeds the data
-using the provided model. 
-
-    from HuggingMouse.visualizers import VisualizerDimReduction
-    from HuggingMouse.trial_averaged_data import MakeTrialAveragedData
-    from sklearn.decomposition import PCA
-    from sklearn.manifold import TSNE
-
-    dim_reduction_model = PCA(n_components=3)
-    trial_averaged_data = MakeTrialAveragedData().get_data(id)
-    visualizer = VisualizerDimReduction(dim_reduction_model)
-    visualizer.info()
-    visualizer.visualize(trial_averaged_data,
-                        'three_session_A', 'natural_movie_one')
-
-    dim_reduction_model2 = TSNE(n_components=3)
-    visualizer2 = VisualizerDimReduction(dim_reduction_model2)
-    visualizer2.visualize(trial_averaged_data,
-                        'three_session_A', 'natural_movie_one')
-
 ### Fitting regression models
 
 The new HuggingMouse pipelines functionality allows fitting custom regression models on all of the experimental trials
@@ -113,9 +73,48 @@ The pipeline also supports method chaining to plot the variance explained for ea
                     regression_model=regr_model,
                     single_trial_f=MovieSingleTrialRegressionAnalysis(),
                     test_set_size=0.25)
-    #511511001 is an experiment container ID. 
+    #511511001 and 646959386 are experiment container ID's.  
     pipe(511511001).dropna().scatter_movies().heatmap()
     pipe(646959386).dropna().scatter_movies().heatmap()
+
+### Selecting experimental container for analysis
+
+HuggingMouse has a helper class for choosing the experimental container (one transgenic animal).
+
+    from HuggingMouse.allen_api_utilities import AllenExperimentUtility
+
+    info_utility = AllenExperimentUtility()
+    #These functions will print some information to help select the
+    #experimental container id to work on. 
+    info_utility.view_all_imaged_areas()
+    info_utility.visual_areas_info()
+    #Let's grab the first eperiment container id in the VISal area. 
+    id = info_utility.experiment_container_ids_imaged_areas(['VISal'])[0]
+
+### Visualizing trial averaged data
+
+You can use any sklearn decomposition (PCA, NMF) or manifold method (TSNE, SpectralEmbedding) or
+your own custom model with a fit_transform method to visualize the patterns in the neural data. 
+This is currently possible with trial-averaged data. The visualize function takes the session and 
+the stimulus that uniquely identify a sequence of trials and embeds the data
+using the provided model. 
+
+    from HuggingMouse.visualizers import VisualizerDimReduction
+    from HuggingMouse.trial_averaged_data import MakeTrialAveragedData
+    from sklearn.decomposition import PCA
+    from sklearn.manifold import TSNE
+
+    dim_reduction_model = PCA(n_components=3)
+    trial_averaged_data = MakeTrialAveragedData().get_data(id)
+    visualizer = VisualizerDimReduction(dim_reduction_model)
+    visualizer.info()
+    visualizer.visualize(trial_averaged_data,
+                        'three_session_A', 'natural_movie_one')
+
+    dim_reduction_model2 = TSNE(n_components=3)
+    visualizer2 = VisualizerDimReduction(dim_reduction_model2)
+    visualizer2.visualize(trial_averaged_data,
+                        'three_session_A', 'natural_movie_one')
 
 ### Enjoy!
 
