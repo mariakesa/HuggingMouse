@@ -171,8 +171,13 @@ class NeuronPredictionPipeline(Pipeline):
             {'Mean_one': row_means_one, 'Mean_two': row_means_two, 'Mean_three': row_means_three, 'cell_id': neuron_ids, 'Var exp for movie one': std_one, 'Var exp for movie two': std_two, 'Var exp for movie three': std_three})
 
         # Create a 3D scatter plot with Plotly
-        fig = px.scatter_3d(means_df, x='Mean_one', y='Mean_two', z='Mean_three', labels={'Mean_one': 'Mean var exp for movie one', 'Mean_two': 'Mean var exp for movie two', 'Mean_three': 'Mean var exp for movie three'},
-                            title='3D Scatter Plot of Mean Variance Explained Across Stimuli', hover_data={'Var exp for movie one': True, 'Var exp for movie two': True, 'Var exp for movie three': True, 'cell_id': True})
+        fig = px.scatter_3d(means_df, x='Mean_one', y='Mean_two', z='Mean_three',
+                            labels={'Mean_one': 'Mean var exp for movie one',
+                                    'Mean_two': 'Mean var exp for movie two', 'Mean_three': 'Mean var exp for movie three'},
+                            title='3D Scatter Plot of Mean Variance Explained Across Stimuli',
+                            hover_data={'Var exp for movie one': True, 'Var exp for movie two': True,
+                                        'Var exp for movie three': True, 'cell_id': True},
+                            color_discrete_sequence=['aquamarine'])  # 'rgb(144, 238, 144)'])
 
         # Show the plot
         fig.show()
