@@ -6,7 +6,7 @@ from HuggingMouse.pipelines.pipeline_tasks import pipeline
 from dotenv import load_dotenv
 from HuggingMouse.pipelines.single_trial_fs import MovieSingleTrialRegressionAnalysis
 from transformers import ViTModel, CLIPVisionModel
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import Ridge, Lasso
 
 from typing import Any
 from sklearn.model_selection import train_test_split
@@ -92,7 +92,7 @@ get_events(511511001)
 # model = ViTModel.from_pretrained('google/vit-base-patch16-224')
 model = CLIPVisionModel.from_pretrained("openai/clip-vit-base-patch32")
 
-regr_model = Ridge(10)
+regr_model = Lasso(10)
 
 kwargs = {'model': model,
           'regression_model': regr_model,
