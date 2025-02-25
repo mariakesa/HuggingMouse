@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from huggingface_hub import HfApi, ModelFilter
+from huggingface_hub import HfApi
 import json
 import time
 
@@ -33,8 +33,7 @@ def get_downloads_last_month(model_name):
 start = time.time()
 # Retrieve metadata for all image recognition models
 api = HfApi()
-filter = ModelFilter(task="image-classification")
-models = api.list_models(filter=filter)
+models = api.list_models(task="image-classification")
 
 # Collect model names
 model_names = [model.modelId for model in models]
