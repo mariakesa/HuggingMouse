@@ -1,0 +1,10 @@
+Retrieve neurons or populations of neurons according to 
+language embeddings (CLIP). Regression model will be
+a bridge between images and language. 
+
+We need to store the embeddings as an initialization step.
+
+Regression model should be trained on all trials. 
+
+
+Wavemap, rastermap tools https://github.com/EricKenjiLee/WaveMAP_Paper

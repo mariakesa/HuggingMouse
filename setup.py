@@ -13,7 +13,8 @@ setup(name='HuggingMouse',
           'numpy==1.23.5',
           'transformers==4.31.0',
           'allensdk==2.16.2',
-          'plotly==5.9.0'
+          'plotly==5.9.0',
+          #'smolagents==1.7.0'
       ],
       packages=find_packages("src"),
       package_dir={"": "src"}
