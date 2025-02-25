@@ -148,3 +148,21 @@ class MultiTrialRegressionPipeline():
         else:
             with open(embedding_file_path, 'rb') as f:
                 self.embeddings = pickle.load(f)
+
+'''
+
+entropy_loss, _, _, _, _, _ = model(X, Y)
+loss = -entropy_loss  # We maximize entropy, so flip sign
+
+# Compute gradients
+model.zero_grad()
+loss.backward()
+
+# Compute Empirical Fisher Information Matrix (Gradient Outer Product Approximation)
+Fisher_approx = {}
+for name, param in model.named_parameters():
+    if param.grad is not None:
+        grad = param.grad.view(-1, 1)  # Flatten gradient
+        Fisher_approx[name] = grad @ grad.T  # Outer product
+        
+'''
